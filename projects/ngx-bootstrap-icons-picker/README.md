@@ -41,14 +41,12 @@ import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 ### Use it in your template
 
 ```html
-<input type="text" class="form-control"
-       [iconPicker]="'terminal-fill'"
-       [ipPosition]="'bottom'"
-       [ipWidth]="'270px'"
-       [ipPlaceHolder]="'Search'"
-       [ipFallbackIcon]="fallbackIconDefault"
-       [value]="selectedIcon"
-       (iconPickerSelect)="onIconPickerSelect($event)"
+<div class="input-group mb-3">
+  <span class="input-group-text"><i class="bi bi-{{selectedIcon}}"></i></span>
+  <input type="text" class="form-control"
+    [iconPicker]="'terminal-fill'"
+    [value]="selectedIcon"
+    (iconPickerSelect)="onIconPickerSelect($event)"
 />
 ```
 ### Component property and methods
@@ -56,7 +54,6 @@ import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 ```html
 export class AppComponent {
   selectedIcon:string = ''
-  fallbackIconDefault:string = '0-circle';
 
   onIconPickerSelect(icon:string):void{
     this.selectedIcon = icon;
