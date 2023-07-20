@@ -13,3 +13,24 @@ Runnare il progetto
 Aprire il browser su
 
 [http://localhost:4200](http://localhost:4200)
+
+
+
+
+## Publish to NPM (zavy)
+
+update version on:
+
+`/package.json`
+
+`/projects/ngx-bootstrap-icons-picker/package.json`
+
+rebuild library
+
+`ng build ngx-bootstrap-icons-picker`
+
+push tgo npm
+
+`cd dist/ngx-bootstrap-icons-picker`
+
+`npm publish`
