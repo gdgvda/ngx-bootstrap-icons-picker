@@ -2,19 +2,19 @@
 
 > By **G**oogle **D**evelopers **G**roup [Valle d'Aosta](https://gdg.community.dev/gdg-valle-daosta/)
 
-_Largely inspired by [ngx-icon-picker](https://github.com/tech-advantage/ngx-icon-picker)_
+This icon picker manages the free, high quality, open source [Bootstrap Icons](https://icons.getbootstrap.com/) library.
+
+![screenshot.jpg](https://raw.githubusercontent.com/gdgvda/ngx-bootstrap-icons-picker/main/screenshot.jpg)
 
 Angular Bootstrap Icons Picker for:
 * [ng-booxtrap](https://github.com/ng-bootstrap/ng-bootstrap)
 * [twbs-bootstrap](https://github.com/twbs/bootstrap)
 * [twbs-icons](https://github.com/twbs/icons)
 
-![screenshot.jpg](https://raw.githubusercontent.com/gdgvda/ngx-bootstrap-icons-picker/main/screenshot.jpg)
-
 Tested with:
 * Angular 14
 
-This icon picker manages the free, high quality, open source [Bootstrap Icons](https://icons.getbootstrap.com/) library.
+_Largely inspired by [ngx-icon-picker](https://github.com/tech-advantage/ngx-icon-picker)_
 
 ## Installing and usage
 
