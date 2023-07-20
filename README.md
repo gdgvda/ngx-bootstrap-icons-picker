@@ -9,6 +9,8 @@ Angular Bootstrap Icons Picker for:
 * [twbs-bootstrap](https://github.com/twbs/bootstrap)
 * [twbs-icons](https://github.com/twbs/icons)
 
+![screenshot.jpg](https://raw.githubusercontent.com/gdgvda/ngx-bootstrap-icons-picker/main/screenshot.jpg)
+
 Tested with:
 * Angular 14
 
@@ -53,11 +55,11 @@ import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 
 ```html
 export class AppComponent {
-selectedIcon:string = ''
+  selectedIcon:string = ''
 
-onIconPickerSelect(icon:string):void{
-this.selectedIcon = icon;
-}
+  onIconPickerSelect(icon:string):void{
+    this.selectedIcon = icon;
+  }
 }
 ```
 
@@ -66,20 +68,20 @@ Available inputs and output :
 ```typescript
 [iconPicker]                // The icon to select in the grid.
 
-  [bipWidth]                  // Use this option to set icon picker dialog width (default:'270px')
-  [bipHeight]                 // Use this option to force icon picker dialog height (default:'auto')
-  [bipMaxHeight]              // Use this option to force icon picker dialog max-height (default:'180px')
+[bipWidth]                  // Use this option to set icon picker dialog width (default:'270px')
+[bipHeight]                 // Use this option to force icon picker dialog height (default:'auto')
+[bipMaxHeight]              // Use this option to force icon picker dialog max-height (default:'180px')
 
-  [bipIconSize]               // Set the icon size in the selector (default:'18px')
-  [bipIconVerticalPadding]    // Set the top and bottom padding (default:'6px') 
-  [bipIconHorizontalPadding]  // Set the left and right button padding (default:'9px') 
-  [bipKeepSearchFilter]       // The search filter keep the value to filter (default:'false')    
+[bipIconSize]               // Set the icon size in the selector (default:'18px')
+[bipIconVerticalPadding]    // Set the top and bottom padding (default:'6px') 
+[bipIconHorizontalPadding]  // Set the left and right button padding (default:'9px') 
+[bipKeepSearchFilter]       // The search filter keep the value to filter (default:'false')    
 
-  [ipPosition]                // Dialog position: 'right', 'left', 'top', 'bottom'(default: 'bottom')
-  [ipFallbackIcon]            // Is used when the icon is undefined (default:'github')
-  [ipPlaceHolder]             // Search input placeholder (default:'Search icon..')
+[ipPosition]                // Dialog position: 'right', 'left', 'top', 'bottom'(default: 'bottom')
+[ipFallbackIcon]            // Is used when the icon is undefined (default:'github')
+[ipPlaceHolder]             // Search input placeholder (default:'Search icon..')
 
-  (iconPickerSelect)          // Event on selected icon value change
+(iconPickerSelect)          // Event on selected icon value change
 ```
 
 To integrate the icon picker with another framework instead of bootstrap, you have to use the extra inputs:

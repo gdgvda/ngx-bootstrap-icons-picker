@@ -9,6 +9,8 @@ Angular Bootstrap Icons Picker for:
 * [twbs-bootstrap](https://github.com/twbs/bootstrap)
 * [twbs-icons](https://github.com/twbs/icons)
 
+![screenshot.jpg](https://raw.githubusercontent.com/gdgvda/ngx-bootstrap-icons-picker/main/screenshot.jpg)
+
 Tested with:
 * Angular 14
 
