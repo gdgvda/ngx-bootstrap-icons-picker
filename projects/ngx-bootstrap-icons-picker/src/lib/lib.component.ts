@@ -1,11 +1,10 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NgxBootstrapIconsPickerService} from "./ngx-bootstrap-icons-picker.service";
-import {BootstrapIcon} from "./ngx-bootstrap-icons-picker.model";
+import {NgxBootstrapIconsPickerService} from "./lib.service";
 
 @Component({
   selector: 'lib-ngx-bootstrap-icons-picker',
-  templateUrl: './ngx-bootstrap-icons-picker.component.html',
-  styleUrls: ['./ngx-bootstrap-icons-picker.component.scss']
+  templateUrl: './lib.component.html',
+  styleUrls: ['./lib.component.scss']
 })
 export class NgxBootstrapIconsPickerComponent implements OnInit {
 
@@ -35,12 +34,11 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
   public left: number = 0;
   public position: string = '';
   public arrowTop: number = 0;
-  public selectedIcon: BootstrapIcon|undefined;
-  //public iconType = IconType;
+  public selectedIcon: string = '';
   public buttonWidth: number = 0;
   public buttonHeight: number = 0;
 
-  icons:BootstrapIcon[] = [];
+  icons:string[] = [];
   search:string = '';
 
   private directiveInstance: any;
@@ -109,9 +107,9 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
 
   setInitialIcon(icon:string):void{
     this.initialIcon = icon;
-    this.selectedIcon = this.icons.find(el=>el?el.name===icon:false);
+    this.selectedIcon = this.icons.find(el=>el?el===icon:false) ?? '';
     if(this.ipKeepSearchFilter && this.selectedIcon && icon!==this.ipFallbackIcon){
-      this.search = this.selectedIcon.name;
+      this.search = this.selectedIcon;
     }else{
       this.search = '';
     }
@@ -126,8 +124,8 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
     this.search = val;
   }
 
-  selectIcon(icon:BootstrapIcon):void{
-    this.directiveInstance.iconSelected(icon.name);
+  selectIcon(icon:string):void{
+    this.directiveInstance.iconSelected(icon);
     this.closeIconPicker();
   }
 

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NgxBootstrapIconsPickerService } from './ngx-bootstrap-icons-picker.service';
+import { NgxBootstrapIconsPickerService } from './lib.service';
 
 describe('NgxBootstrapIconsPickerService', () => {
   let service: NgxBootstrapIconsPickerService;

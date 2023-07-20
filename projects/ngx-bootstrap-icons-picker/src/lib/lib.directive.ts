@@ -1,5 +1,5 @@
 import {Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, ViewContainerRef} from '@angular/core';
-import {NgxBootstrapIconsPickerComponent} from './ngx-bootstrap-icons-picker.component';
+import {NgxBootstrapIconsPickerComponent} from './lib.component';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector

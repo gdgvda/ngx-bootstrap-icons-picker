@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxBootstrapIconsPickerComponent } from './ngx-bootstrap-icons-picker.component';
+import { NgxBootstrapIconsPickerComponent } from './lib.component';
 
 describe('NgxBootstrapIconsPickerComponent', () => {
   let component: NgxBootstrapIconsPickerComponent;

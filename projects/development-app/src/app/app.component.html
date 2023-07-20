@@ -20,6 +20,18 @@
     />
   </div>
   <h3>Code</h3>
+  <h4><code>component.html</code></h4>
+  <pre><code>&lt;input type="text" class="form-control"
+  [iconPicker]="'terminal-fill'"
+  [ipPosition]="'bottom'"
+  [ipWidth]="'250px'"
+  [ipPlaceHolder]="'Choose an icon'"
+  [ipFallbackIcon]="fallbackIconDefault"
+  [value]="selectedIcon"
+  (iconPickerSelect)="onIconPickerSelect($event)"
+/&gt;</code>
+  </pre>
+  <h4><code>component.html</code></h4>
   <pre><code>&lt;input type="text" class="form-control"
   [iconPicker]="'terminal-fill'"
   [ipPosition]="'bottom'"
