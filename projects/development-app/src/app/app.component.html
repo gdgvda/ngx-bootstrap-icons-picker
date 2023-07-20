@@ -11,35 +11,47 @@
     <span class="input-group-text"><i class="bi bi-{{selectedIcon}}"></i></span>
     <input type="text" class="form-control"
       [iconPicker]="'terminal-fill'"
-      [ipPosition]="'bottom'"
-      [ipWidth]="'250px'"
-      [ipPlaceHolder]="'Choose an icon'"
-      [ipFallbackIcon]="fallbackIconDefault"
+      [bipPosition]="'bottom'"
+      [bipWidth]="'270px'"
+      [bipPlaceholder]="'Search icon..'"
+      [bipFallbackIcon]="fallbackIconDefault"
       [value]="selectedIcon"
       (iconPickerSelect)="onIconPickerSelect($event)"
     />
   </div>
   <h3>Code</h3>
-  <h4><code>component.html</code></h4>
+  <h4>Load the module for your app</h4>
+  <pre><code>import &#123;NgxBootstrapIconsPickerModule&#125; from "ngx-bootstrap-icons-picker";
+
+@NgModule(&#123;
+  ...
+  imports:[
+    ...
+    NgxBootstrapIconsPickerModule
+  ]
+&#124;)</code>
+  </pre>
+  <h4>Use it in your HTML template</h4>
   <pre><code>&lt;input type="text" class="form-control"
   [iconPicker]="'terminal-fill'"
   [ipPosition]="'bottom'"
-  [ipWidth]="'250px'"
-  [ipPlaceHolder]="'Choose an icon'"
+  [ipWidth]="'270px'"
+  [ipPlaceHolder]="'Search'"
   [ipFallbackIcon]="fallbackIconDefault"
   [value]="selectedIcon"
   (iconPickerSelect)="onIconPickerSelect($event)"
 /&gt;</code>
   </pre>
-  <h4><code>component.html</code></h4>
-  <pre><code>&lt;input type="text" class="form-control"
-  [iconPicker]="'terminal-fill'"
-  [ipPosition]="'bottom'"
-  [ipWidth]="'250px'"
-  [ipPlaceHolder]="'Choose an icon'"
-  [ipFallbackIcon]="fallbackIconDefault"
-  [value]="selectedIcon"
-  (iconPickerSelect)="onIconPickerSelect($event)"
-/&gt;</code>
+  <h4>Component property and methods</h4>
+  <pre><code>export class AppComponent &#123;
+    selectedIcon:string = ''
+    fallbackIconDefault:string = '0-circle';
+  &#125;
+
+  onIconPickerSelect(icon:string):void&#123;
+    console.log(icon);
+    this.selectedIcon = icon;
+  &#125;
+&#125;</code>
   </pre>
 </div>
