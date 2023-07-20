@@ -5,4 +5,27 @@
     <i class="bi bi-github"></i> View on Github
   </a>
   <hr/>
+  <h2>Example</h2>
+  <p>Basic example</p>
+  <div class="input-group mb-3">
+    <span class="input-group-text"><i class="bi bi-{{selectedIcon}}"></i></span>
+    <input type="text" class="form-control"
+      [iconPicker]="'terminal-fill'"
+      [ipPosition]="'bottom'"
+      [ipWidth]="'250px'"
+      [ipPlaceHolder]="'Choose an icon'"
+      [ipFallbackIcon]="fallbackIconDefault"
+      (iconPickerSelect)="onIconPickerSelect($event)"
+    />
+  </div>
+  <h3>Code</h3>
+  <pre><code>&lt;input type="text" class="form-control"
+  [iconPicker]="'terminal-fill'"
+  [ipPosition]="'bottom'"
+  [ipWidth]="'250px'"
+  [ipPlaceHolder]="'Choose an icon'"
+  [ipFallbackIcon]="fallbackIconDefault"
+  (iconPickerSelect)="onIconPickerSelect($event)"
+/&gt;</code>
+  </pre>
 </div>

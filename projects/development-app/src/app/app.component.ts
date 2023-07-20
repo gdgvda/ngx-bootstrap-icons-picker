@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'development-app';
+
+  selectedIcon:string = ''
+  fallbackIconDefault:string = '0-circle';
+
+  ngOnInit(): void {
+
+  }
+
+  onIconPickerSelect(icon:string):void {
+    console.log(icon);
+    //this.iconCssDefault.setValue(icon);
+    this.selectedIcon = icon;
+  }
+
 }
