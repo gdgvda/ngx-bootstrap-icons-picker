@@ -5,7 +5,7 @@ import {BootstrapIcon} from "./ngx-bootstrap-icons-picker.model";
 @Component({
   selector: 'lib-ngx-bootstrap-icons-picker',
   templateUrl: './ngx-bootstrap-icons-picker.component.html',
-  styleUrls: ['./ngx-bootstrap-icons-picker.component.css']
+  styleUrls: ['./ngx-bootstrap-icons-picker.component.scss']
 })
 export class NgxBootstrapIconsPickerComponent implements OnInit {
 
