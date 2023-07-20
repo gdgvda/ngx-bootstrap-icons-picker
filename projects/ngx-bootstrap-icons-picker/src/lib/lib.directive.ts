@@ -8,19 +8,23 @@ import {NgxBootstrapIconsPickerComponent} from './lib.component';
 export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnChanges {
 
   @Input() iconPicker = ''
-  @Input() bipPlaceholder = 'Search icon...';
-  @Input() bipPosition = 'right';
-  @Input() bipFallbackIcon = 'github';
+
+  @Input() bipWidth = '270px';
   @Input() bipHeight = 'auto';
-  @Input() bipMaxHeight = '200px';
-  @Input() bipWidth = '230px';
+  @Input() bipMaxHeight = '180px';
+
   @Input() bipIconSize = '18px';
-  @Input() bipIconVerticalPadding = '6px';
+  @Input() bipIconVerticalPadding = '9px';
   @Input() bipIconHorizontalPadding = '9px';
   @Input() bipKeepSearchFilter = 'false';
+
+  @Input() bipPosition = 'bottom';
+  @Input() bipFallbackIcon = 'github';
+  @Input() bipPlaceholder = 'Search icon..';
+
   @Input() bipButtonStyleClass = 'btn btn-default';
-  @Input() bipInputSearchStyleClass = 'form-control input-sm';
   @Input() bipDivSearchStyleClass = '';
+  @Input() bipInputSearchStyleClass = 'form-control input-sm';
 
   @Output() iconPickerSelect = new EventEmitter<string>(true);
 
