@@ -15,8 +15,7 @@ export class SearchPipe implements PipeTransform {
     return values.filter(icon => {
       let keep = false;
       if(icon.name){keep = keep || this.clean(icon.name).includes(searchValue);}
-      // @todo abilitare ricerca negli alias
-      //if(icon.aliases){keep = keep || icon.aliases.some(alias => this.clean(alias).includes(searchValue));}
+      if(icon.aliases.length){keep = keep || icon.aliases.some(alias => this.clean(alias).includes(searchValue));}
       return keep;
     });
 

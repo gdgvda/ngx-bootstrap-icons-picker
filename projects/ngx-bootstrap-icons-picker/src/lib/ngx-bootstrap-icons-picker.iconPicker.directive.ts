@@ -59,7 +59,7 @@ export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnCha
       const vcRef = this.vcRef;
       const cmpRef = vcRef.createComponent(NgxBootstrapIconsPickerComponent);
       cmpRef.instance.setDialog(this, this.el, this.iconPicker, this.ipPosition, this.ipHeight, this.ipMaxHeight,
-        this.ipWidth, this.ipPlaceHolder, this.ipFallbackIcon, this.ipIconPack, this.ipIconSize,
+        this.ipWidth, this.ipPlaceHolder, this.ipFallbackIcon, this.ipIconSize,
         this.ipIconVerticalPadding, this.ipIconHorizontalPadding, this.ipButtonStyleClass, this.ipDivSearchStyleClass,
         this.ipInputSearchStyleClass, this.ipKeepSearchFilter);
       this.dialog = cmpRef.instance;

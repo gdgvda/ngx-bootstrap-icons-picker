@@ -28,7 +28,6 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
   public ipKeepSearchFilter: boolean = false;
   public ipPlaceHolder: string = '';
   public ipFallbackIcon: string = '';
-  public ipIconPack: string[] = [];
 
   public show: boolean = false;
   public hidden: boolean = false;
@@ -62,7 +61,7 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
 
   ngOnInit():void{
     console.log('init component');
-    this.icons = this.service.getIcons(this.ipIconPack);
+    this.icons = this.service.getIcons();
     this.listenerMouseDown = (event: any) => this.onMouseDown(event);
     this.listenerResize = () => this.onResize();
     this.openDialog(this.initialIcon);
@@ -79,7 +78,6 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
     ipWidth: string,
     ipPlaceHolder: string,
     ipFallbackIcon: string,
-    ipIconPack: string[],
     ipIconSize: string,
     ipIconVerticalPadding: string,
     ipIconHorizontalPadding: string,
@@ -102,7 +100,6 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
     this.ipKeepSearchFilter = JSON.parse(ipKeepSearchFilter);
     this.ipPlaceHolder = ipPlaceHolder;
     this.ipFallbackIcon = ipFallbackIcon;
-    this.ipIconPack = ipIconPack;
     this.ipButtonStyleClass = ipButtonStyleClass;
     this.ipInputSearchStyleClass = ipInputSearchStyleClass;
     this.ipDivSearchStyleClass = ipDivSearchStyleClass;

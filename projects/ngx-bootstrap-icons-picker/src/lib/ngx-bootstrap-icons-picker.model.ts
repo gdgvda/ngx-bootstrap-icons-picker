@@ -1,8 +1,8 @@
 export class BootstrapIcon {
-  id: number;
-  name: string;
-  constructor(id:number,name:string){
-    this.id = id;
+  name:string;
+  aliases:string[];
+  constructor(name:string,aliases:string[]=[]){
     this.name = name;
+    this.aliases = aliases;
   }
 }
