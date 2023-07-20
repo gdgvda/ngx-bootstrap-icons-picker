@@ -78,9 +78,9 @@ Available inputs and output :
   [bipIconHorizontalPadding]  // Set the left and right button padding (default:'9px') 
   [bipKeepSearchFilter]       // The search filter keep the value to filter (default:'false')    
 
-  [bipPosition]                // Dialog position: 'right', 'left', 'top', 'bottom'(default: 'bottom')
-  [bipFallbackIcon]            // Is used when the icon is undefined (default:'github')
-  [bipPlaceHolder]             // Search input placeholder (default:'Search icon..')
+  [bipPosition]               // Dialog position: 'right', 'left', 'top', 'bottom'(default: 'bottom')
+  [bipFallbackIcon]           // Is used when the icon is undefined (default:'github')
+  [bipPlaceHolder]            // Search input placeholder (default:'Search icon..')
 
   (iconPickerSelect)          // Event on selected icon value change
 ```
@@ -93,6 +93,12 @@ To integrate the icon picker with another framework instead of bootstrap, you ha
   [bipInputSearchStyleClass]  // To override the bootstrap class for the input search
 ```
 
-## Contributors
+## Developers
+
+### Maintainer
 
 - [Manuel Zavatta](https://github.com/Zavy86)
+
+### Contributors
+
+- [We Want You!](https://github.com/gdgvda/ngx-bootstrap-icons-picker/blob/main/CONTRIBUTING.md)
