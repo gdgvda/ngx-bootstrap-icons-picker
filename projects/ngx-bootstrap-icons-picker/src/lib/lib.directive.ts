@@ -8,21 +8,19 @@ import {NgxBootstrapIconsPickerComponent} from './lib.component';
 export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnChanges {
 
   @Input() iconPicker = ''
-  @Input() ipPlaceHolder = 'Search icon...';
-  @Input() ipPosition = 'right';
-  @Input() ipFallbackIcon = 'fas fa-user';
-  @Input() ipHeight = 'auto';
-  @Input() ipMaxHeight = '200px';
-  @Input() ipWidth = '230px';
-  @Input() ipIconSize = '16px';
-  @Input() ipIconVerticalPadding = '6px'; // Top / Bottom
-  @Input() ipIconHorizontalPadding = '10px'; // Left / Right
-  @Input() ipIconPack = ['bs', 'fa5'];
-  @Input() ipKeepSearchFilter = 'false';
-  // Default design with bootstrap
-  @Input() ipButtonStyleClass = 'btn btn-default';
-  @Input() ipDivSearchStyleClass = '';
-  @Input() ipInputSearchStyleClass = 'form-control input-sm';
+  @Input() bipPlaceholder = 'Search icon...';
+  @Input() bipPosition = 'right';
+  @Input() bipFallbackIcon = 'github';
+  @Input() bipHeight = 'auto';
+  @Input() bipMaxHeight = '200px';
+  @Input() bipWidth = '230px';
+  @Input() bipIconSize = '18px';
+  @Input() bipIconVerticalPadding = '6px';
+  @Input() bipIconHorizontalPadding = '9px';
+  @Input() bipKeepSearchFilter = 'false';
+  @Input() bipButtonStyleClass = 'btn btn-default';
+  @Input() bipInputSearchStyleClass = 'form-control input-sm';
+  @Input() bipDivSearchStyleClass = '';
 
   @Output() iconPickerSelect = new EventEmitter<string>(true);
 
@@ -49,7 +47,7 @@ export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnCha
   }
 
   ngOnInit() {
-    this.iconPicker = this.iconPicker || this.ipFallbackIcon || 'fa fa-user-plus';
+    this.iconPicker = this.iconPicker || this.bipFallbackIcon || 'fa fa-user-plus';
     this.iconPickerSelect.emit(this.iconPicker);
   }
 
@@ -58,10 +56,10 @@ export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnCha
       this.created = true;
       const vcRef = this.vcRef;
       const cmpRef = vcRef.createComponent(NgxBootstrapIconsPickerComponent);
-      cmpRef.instance.setDialog(this, this.el, this.iconPicker, this.ipPosition, this.ipHeight, this.ipMaxHeight,
-        this.ipWidth, this.ipPlaceHolder, this.ipFallbackIcon, this.ipIconSize,
-        this.ipIconVerticalPadding, this.ipIconHorizontalPadding, this.ipButtonStyleClass, this.ipDivSearchStyleClass,
-        this.ipInputSearchStyleClass, this.ipKeepSearchFilter);
+      cmpRef.instance.setDialog(this, this.el, this.iconPicker, this.bipPosition, this.bipHeight, this.bipMaxHeight,
+        this.bipWidth, this.bipPlaceholder, this.bipFallbackIcon, this.bipIconSize,
+        this.bipIconVerticalPadding, this.bipIconHorizontalPadding, this.bipButtonStyleClass, this.bipDivSearchStyleClass,
+        this.bipInputSearchStyleClass, this.bipKeepSearchFilter);
       this.dialog = cmpRef.instance;
 
       if (this.vcRef !== vcRef) {
