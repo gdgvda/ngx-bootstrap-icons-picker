@@ -27,8 +27,12 @@
       (iconPickerSelect)="onIconPickerSelect($event)"
     />
   </div>
-  <h3>Code</h3>
-  <h4>Load the module for your app</h4>
+  <h3>Installing and usage</h3>
+  <h4>With Angular CLI</h4>
+  <pre><code>ng add ngx-bootstrap-icons-picker</code></pre>
+  <h4>Or with NPM</h4>
+  <pre><code>npm install ngx-bootstrap-icons-picker --save`</code></pre>
+  <h3>Load the module for your app</h3>
   <pre><code>import &#123;NgxBootstrapIconsPickerModule&#125; from "ngx-bootstrap-icons-picker";
 
 @NgModule(&#123;
@@ -37,9 +41,8 @@
     ...
     NgxBootstrapIconsPickerModule
   ]
-&#125;)</code>
-  </pre>
-  <h4>Use it in your HTML template</h4>
+&#125;)</code></pre>
+  <h3>Use it in your HTML template</h3>
   <pre><code>&lt;input type="text" class="form-control"
   [iconPicker]="'terminal-fill'"
   [ipPosition]="'bottom'"
@@ -48,8 +51,7 @@
   [ipFallbackIcon]="fallbackIconDefault"
   [value]="selectedIcon"
   (iconPickerSelect)="onIconPickerSelect($event)"
-/&gt;</code>
-  </pre>
+/&gt;</code></pre>
   <h4>Component property and methods</h4>
   <pre><code>export class AppComponent &#123;
   selectedIcon:string = ''
@@ -59,6 +61,5 @@
     console.log(icon);
     this.selectedIcon = icon;
   &#125;
-&#125;</code>
-  </pre>
+&#125;</code></pre>
 </div>
