@@ -1,24 +1,92 @@
-# NgxBootstrapIconsPicker
+# Angular Bootstrap Icons Picker
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+> By **G**oogle **D**evelopers **G**roup [Valle d'Aosta](https://gdg.community.dev/gdg-valle-daosta/)
 
-## Code scaffolding
+_Largely inspired by [ngx-icon-picker](https://github.com/tech-advantage/ngx-icon-picker)_
 
-Run `ng generate component component-name --project ngx-bootstrap-icons-picker` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-bootstrap-icons-picker`.
-> Note: Don't forget to add `--project ngx-bootstrap-icons-picker` or else it will be added to the default project in your `angular.json` file. 
+Angular Bootstrap Icons Picker for:
+* [ng-booxtrap](https://github.com/ng-bootstrap/ng-bootstrap)
+* [twbs-bootstrap](https://github.com/twbs/bootstrap)
+* [twbs-icons](https://github.com/twbs/icons)
 
-## Build
+Tested with:
+* Angular 14
 
-Run `ng build ngx-bootstrap-icons-picker` to build the project. The build artifacts will be stored in the `dist/` directory.
+This icon picker manages the free, high quality, open source [Bootstrap Icons](https://icons.getbootstrap.com/) library.
 
-## Publishing
+## Installing and usage
 
-After building your library with `ng build ngx-bootstrap-icons-picker`, go to the dist folder `cd dist/ngx-bootstrap-icons-picker` and run `npm publish`.
+`npm install ngx-bootstrap-icons-picker --save`
 
-## Running unit tests
+### Load the module for your app
 
-Run `ng test ngx-bootstrap-icons-picker` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```typescript
+import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 
-## Further help
+@NgModule({
+    ...
+    imports:[
+        ...
+        NgxBootstrapIconsPickerModule
+    ]
+})
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Use it in your template
+
+```html
+<input type="text" class="form-control"
+       [iconPicker]="'terminal-fill'"
+       [ipPosition]="'bottom'"
+       [ipWidth]="'270px'"
+       [ipPlaceHolder]="'Search'"
+       [ipFallbackIcon]="fallbackIconDefault"
+       [value]="selectedIcon"
+       (iconPickerSelect)="onIconPickerSelect($event)"
+/>
+```
+### Component property and methods
+
+```html
+export class AppComponent {
+  selectedIcon:string = ''
+  fallbackIconDefault:string = '0-circle';
+
+  onIconPickerSelect(icon:string):void{
+    this.selectedIcon = icon;
+  }
+}
+```
+
+Available inputs and output :
+
+```typescript
+[iconPicker]                // The icon to select in the grid.
+
+[bipWidth]                  // Use this option to set icon picker dialog width (default:'270px')
+[bipHeight]                 // Use this option to force icon picker dialog height (default:'auto')
+[bipMaxHeight]              // Use this option to force icon picker dialog max-height (default:'180px')
+
+[bipIconSize]               // Set the icon size in the selector (default:'18px')
+[bipIconVerticalPadding]    // Set the top and bottom padding (default:'6px') 
+[bipIconHorizontalPadding]  // Set the left and right button padding (default:'9px') 
+[bipKeepSearchFilter]       // The search filter keep the value to filter (default:'false')    
+
+[ipPosition]                // Dialog position: 'right', 'left', 'top', 'bottom'(default: 'bottom')
+[ipFallbackIcon]            // Is used when the icon is undefined (default:'github')
+[ipPlaceHolder]             // Search input placeholder (default:'Search icon..')
+
+(iconPickerSelect)          // Event on selected icon value change
+```
+
+To integrate the icon picker with another framework instead of bootstrap, you have to use the extra inputs:
+
+```typescript
+[bipButtonStyleClass]       // To override the bootstrap class for the button
+[bipDivSearchStyleClass]    // To override the bootstrap class for the div search
+[bipInputSearchStyleClass]  // To override the bootstrap class for the input search
+```
+
+## Contributors
+
+- [Manuel Zavatta](https://github.com/Zavy86)
