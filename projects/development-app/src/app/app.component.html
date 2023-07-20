@@ -19,10 +19,6 @@
     <span class="input-group-text"><i class="bi bi-{{selectedIcon}}"></i></span>
     <input type="text" class="form-control"
       [iconPicker]="'terminal-fill'"
-      [bipPosition]="'bottom'"
-      [bipWidth]="'270px'"
-      [bipPlaceholder]="'Search icon..'"
-      [bipFallbackIcon]="fallbackIconDefault"
       [value]="selectedIcon"
       (iconPickerSelect)="onIconPickerSelect($event)"
     />
@@ -43,22 +39,18 @@
   ]
 &#125;)</code></pre>
   <h3>Use it in your HTML template</h3>
-  <pre><code>&lt;input type="text" class="form-control"
-  [iconPicker]="'terminal-fill'"
-  [ipPosition]="'bottom'"
-  [ipWidth]="'270px'"
-  [ipPlaceHolder]="'Search'"
-  [ipFallbackIcon]="fallbackIconDefault"
-  [value]="selectedIcon"
-  (iconPickerSelect)="onIconPickerSelect($event)"
+  <pre><code>&lt;div class="input-group mb-3"&gt;
+  &lt;span class="input-group-text"&gt;&lt;i class="bi bi-&#123;&#123;selectedIcon&#125;&#125;"&gt;&lt;/i&gt;&lt;/span&gt;
+  &lt;input type="text" class="form-control"
+    [iconPicker]="'terminal-fill'"
+    [value]="selectedIcon"
+    (iconPickerSelect)="onIconPickerSelect($event)"
 /&gt;</code></pre>
   <h4>Component property and methods</h4>
   <pre><code>export class AppComponent &#123;
   selectedIcon:string = ''
-  fallbackIconDefault:string = '0-circle';
 
   onIconPickerSelect(icon:string):void&#123;
-    console.log(icon);
     this.selectedIcon = icon;
   &#125;
 &#125;</code></pre>
