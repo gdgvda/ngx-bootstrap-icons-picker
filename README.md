@@ -32,11 +32,11 @@ Or with NPM
 import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 
 @NgModule({
-    ...
+  ...
     imports:[
-        ...
-        NgxBootstrapIconsPickerModule
-    ]
+  ...
+    NgxBootstrapIconsPickerModule
+]
 })
 ```
 
@@ -46,14 +46,15 @@ import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 <div class="input-group mb-3">
   <span class="input-group-text"><i class="bi bi-{{selectedIcon}}"></i></span>
   <input type="text" class="form-control"
-    [iconPicker]="'terminal-fill'"
-    [value]="selectedIcon"
-    (iconPickerSelect)="onIconPickerSelect($event)"
-/>
+         [iconPicker]="'terminal-fill'"
+         [value]="selectedIcon"
+         (iconPickerSelect)="onIconPickerSelect($event)"
+  />
+</div>
 ```
 ### Component property and methods
 
-```html
+```typescript
 export class AppComponent {
   selectedIcon:string = ''
 
@@ -66,28 +67,28 @@ export class AppComponent {
 Available inputs and output :
 
 ```typescript
-[iconPicker]                // The icon to select in the grid.
+  [iconPicker]                // The icon to select in the grid.
 
-[bipWidth]                  // Use this option to set icon picker dialog width (default:'270px')
-[bipHeight]                 // Use this option to force icon picker dialog height (default:'auto')
-[bipMaxHeight]              // Use this option to force icon picker dialog max-height (default:'180px')
+  [bipWidth]                  // Use this option to set icon picker dialog width (default:'270px')
+  [bipHeight]                 // Use this option to force icon picker dialog height (default:'auto')
+  [bipMaxHeight]              // Use this option to force icon picker dialog max-height (default:'180px')
 
-[bipIconSize]               // Set the icon size in the selector (default:'18px')
-[bipIconVerticalPadding]    // Set the top and bottom padding (default:'6px') 
-[bipIconHorizontalPadding]  // Set the left and right button padding (default:'9px') 
-[bipKeepSearchFilter]       // The search filter keep the value to filter (default:'false')    
+  [bipIconSize]               // Set the icon size in the selector (default:'18px')
+  [bipIconVerticalPadding]    // Set the top and bottom padding (default:'6px') 
+  [bipIconHorizontalPadding]  // Set the left and right button padding (default:'9px') 
+  [bipKeepSearchFilter]       // The search filter keep the value to filter (default:'false')    
 
-[ipPosition]                // Dialog position: 'right', 'left', 'top', 'bottom'(default: 'bottom')
-[ipFallbackIcon]            // Is used when the icon is undefined (default:'github')
-[ipPlaceHolder]             // Search input placeholder (default:'Search icon..')
+  [bipPosition]                // Dialog position: 'right', 'left', 'top', 'bottom'(default: 'bottom')
+  [bipFallbackIcon]            // Is used when the icon is undefined (default:'github')
+  [bipPlaceHolder]             // Search input placeholder (default:'Search icon..')
 
-(iconPickerSelect)          // Event on selected icon value change
+  (iconPickerSelect)          // Event on selected icon value change
 ```
 
 To integrate the icon picker with another framework instead of bootstrap, you have to use the extra inputs:
 
 ```typescript
-[bipButtonStyleClass]       // To override the bootstrap class for the button
+  [bipButtonStyleClass]       // To override the bootstrap class for the button
   [bipDivSearchStyleClass]    // To override the bootstrap class for the div search
   [bipInputSearchStyleClass]  // To override the bootstrap class for the input search
 ```
