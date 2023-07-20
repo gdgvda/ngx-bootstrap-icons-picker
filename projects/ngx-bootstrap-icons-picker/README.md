@@ -16,6 +16,12 @@ This icon picker manages the free, high quality, open source [Bootstrap Icons](h
 
 ## Installing and usage
 
+With Angular CLI
+
+`ng add ngx-bootstrap-icons-picker`
+
+Or with NPM
+
 `npm install ngx-bootstrap-icons-picker --save`
 
 ### Load the module for your app
