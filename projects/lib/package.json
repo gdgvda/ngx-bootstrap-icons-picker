@@ -1,5 +1,5 @@
 {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "name": "ngx-bootstrap-icons-picker",
   "description": "A Bootstrap Icons Picker for Angular",
   "keywords": [
@@ -9,10 +9,10 @@
   ],
   "license": "MIT",
   "author": "https://github.com/Zavy86",
-  "homepage": "https://github.com/gdgvda/ngx-bootstrap-icons-picker",
+  "homepage": "https://gdgvda.github.io/ngx-bootstrap-icons-picker",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gdgvda/ngx-bootstrap-icons-picker"
+    "url": "https://github.com/gdgvda/ngx-bootstrap-icons-picker"
   },
   "peerDependencies": {
     "@angular/common": "^14.2.0",
