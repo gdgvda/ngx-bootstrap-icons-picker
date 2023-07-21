@@ -2,6 +2,9 @@
 
 > By **G**oogle **D**evelopers **G**roup [Valle d'Aosta](https://gdg.community.dev/gdg-valle-daosta/)
 
+[![github](https://img.shields.io/badge/Source%20Code-GitHub-blue)](https://github.com/gdgvda/ngx-bootstrap-icons-picker)
+[![npm](https://img.shields.io/badge/Package-NPM-red)](https://www.npmjs.com/package/ngx-bootstrap-icons-picker)
+
 This icon picker manages the free, high quality, open source [Bootstrap Icons](https://icons.getbootstrap.com/) library.
 
 ![screenshot.jpg](https://raw.githubusercontent.com/gdgvda/ngx-bootstrap-icons-picker/main/screenshot.jpg)
