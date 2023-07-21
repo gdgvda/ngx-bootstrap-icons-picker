@@ -1,7 +1,7 @@
 {
   "version": "1.0.6",
   "name": "ngx-bootstrap-icons-picker",
-  "description": "A Bootstrap Icons Picker for Angular",
+  "description": "A Bootstrap Icons Picker for Angular (a simple icon selector)",
   "keywords": [
     "angular",
     "bootstrap",
