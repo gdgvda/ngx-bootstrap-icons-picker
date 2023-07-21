@@ -1,16 +1,18 @@
 # Angular Bootstrap Icons Picker
 
+Contributing instructions
+
 ## Development
 
-Lanciare la build auto-aggiornante
+Launch the library build with watch
 
-`ng build ngx-bootstrap-icons-picker --watch`
+`npm run watch-lib`
 
-Runnare il progetto
+Serve the demo project
 
-`ng serve`
+`npm run watch-demo`
 
-Aprire il browser su
+Open on browser
 
 [http://localhost:4200](http://localhost:4200)
 
@@ -18,26 +20,26 @@ Aprire il browser su
 
 ## Publish demo to GitHub Pages
 
-rebuild demo with:
+Rebuild demo with:
 
 `npm run build-demo`
 
-and push new files
+Push new files to remote repository
 
-## Publish to NPM (zavy)
 
-update version on:
+
+## Publish to NPM
+
+Update version on:
 
 `/package.json`
 
-`/projects/ngx-bootstrap-icons-picker/package.json`
+`/projects/lib/package.json`
 
-rebuild library
+Rebuild library
 
-`ng build ngx-bootstrap-icons-picker`
+`npm run build-lib`
 
-push tgo npm
+Push to package manager
 
-`cd dist/ngx-bootstrap-icons-picker`
-
-`npm publish`
+` npm publish dist\ngx-bootstrap-icons-picker`
