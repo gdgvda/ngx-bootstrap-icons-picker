@@ -5,7 +5,13 @@
   "keywords": [
     "angular",
     "bootstrap",
-    "icons"
+    "bootstrap-icons",
+    "bootstrap-icon-picker",
+    "angular-icon-picker",
+    "icon-selector",
+    "icon-picker",
+    "icons",
+    "icon"
   ],
   "license": "MIT",
   "author": "https://github.com/Zavy86",
