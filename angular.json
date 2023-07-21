@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-bootstrap-icons-picker": {
+    "lib": {
       "projectType": "library",
-      "root": "projects/ngx-bootstrap-icons-picker",
-      "sourceRoot": "projects/ngx-bootstrap-icons-picker/src",
+      "root": "projects/lib",
+      "sourceRoot": "projects/lib/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-bootstrap-icons-picker/ng-package.json"
+            "project": "projects/lib/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-bootstrap-icons-picker/tsconfig.lib.prod.json"
+              "tsConfig": "projects/lib/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngx-bootstrap-icons-picker/tsconfig.lib.json"
+              "tsConfig": "projects/lib/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,9 +27,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-bootstrap-icons-picker/src/test.ts",
-            "tsConfig": "projects/ngx-bootstrap-icons-picker/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-bootstrap-icons-picker/karma.conf.js"
+            "main": "projects/lib/src/test.ts",
+            "tsConfig": "projects/lib/tsconfig.spec.json",
+            "karmaConfig": "projects/lib/karma.conf.js"
           }
         }
       },
