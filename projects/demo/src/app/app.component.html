@@ -1,26 +1,45 @@
 <div class="container">
   <h1>Bootstrap Icons Picker for Angular</h1>
   <hr/>
-  <a class="btn btn-success" href="https://gdg.community.dev/gdg-valle-daosta/" target="blank">
-    <i class="bi bi-google"></i> GDG Valle d'Aosta
-  </a>
-  &nbsp;
-  <a class="btn btn-primary" href="https://github.com/gdgvda/ngx-bootstrap-icons-picker/" target="blank">
-    <i class="bi bi-github"></i> View on Github
-  </a>
-  &nbsp;
-  <a class="btn btn-warning" href="https://github.com/gdgvda/ngx-bootstrap-icons-picker/blob/main/CONTRIBUTING.md" target="blank">
-    <i class="bi bi-git"></i> Contribute
-  </a>
+  <div class="row align-items-start">
+    <div class="col">
+      <div class="d-grid gap-2">
+        <a class="btn btn-success" href="https://gdg.community.dev/gdg-valle-daosta/" target="blank">
+          <i class="bi bi-google"></i> GDG Valle d'Aosta
+        </a>
+      </div>
+    </div>
+    <div class="col">
+      <div class="d-grid gap-2">
+        <a class="btn btn-primary" href="https://github.com/gdgvda/ngx-bootstrap-icons-picker/" target="blank">
+          <i class="bi bi-github"></i> Source Code on Github
+        </a>
+      </div>
+    </div>
+    <div class="col">
+      <div class="d-grid gap-2">
+        <a class="btn btn-danger" href="https://www.npmjs.com/package/ngx-bootstrap-icons-picker" target="blank">
+          <i class="bi bi-box-fill"></i> Package on NPM
+        </a>
+      </div>
+    </div>
+    <div class="col">
+      <div class="d-grid gap-2">
+        <a class="btn btn-warning" href="https://github.com/gdgvda/ngx-bootstrap-icons-picker/blob/main/CONTRIBUTING.md" target="blank">
+          <i class="bi bi-git"></i> Contribute
+        </a>
+      </div>
+    </div>
+  </div>
   <hr/>
   <h2>Example</h2>
   <p>Basic example</p>
   <div class="input-group mb-3">
     <span class="input-group-text"><i class="bi bi-{{selectedIcon}}"></i></span>
     <input type="text" class="form-control"
-      [iconPicker]="'terminal-fill'"
-      [value]="selectedIcon"
-      (iconPickerSelect)="onIconPickerSelect($event)"
+           [iconPicker]="'terminal-fill'"
+           [value]="selectedIcon"
+           (iconPickerSelect)="onIconPickerSelect($event)"
     />
   </div>
   <h3>Installing and usage</h3>
@@ -45,7 +64,8 @@
     [iconPicker]="'terminal-fill'"
     [value]="selectedIcon"
     (iconPickerSelect)="onIconPickerSelect($event)"
-/&gt;</code></pre>
+  /&gt;
+&lt;/div&gt;</code></pre>
   <h4>Component property and methods</h4>
   <pre><code>export class AppComponent &#123;
   selectedIcon:string = ''

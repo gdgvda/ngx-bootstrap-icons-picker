@@ -16,6 +16,9 @@ Aprire il browser su
 
 
 
+## Publish demo to GitHub Pages
+
+`ng build demo`
 
 ## Publish to NPM (zavy)
 

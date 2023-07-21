@@ -8,15 +8,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
   selectedIcon:string = ''
-  fallbackIconDefault:string = '0-circle';
-
-  ngOnInit(): void {
-
-  }
 
   onIconPickerSelect(icon:string):void {
     console.log(icon);
-    //this.iconCssDefault.setValue(icon);
     this.selectedIcon = icon;
   }
 
