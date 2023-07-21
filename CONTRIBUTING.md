@@ -18,7 +18,11 @@ Aprire il browser su
 
 ## Publish demo to GitHub Pages
 
-`ng build demo`
+rebuild demo with:
+
+`npm run build-demo`
+
+and push new files
 
 ## Publish to NPM (zavy)
 
