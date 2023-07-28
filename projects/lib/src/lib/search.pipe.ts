@@ -4,7 +4,7 @@ import {Pipe, PipeTransform} from '@angular/core';
   name: 'search'
 })
 
-export class SearchPipe implements PipeTransform {
+export class SearchPipe implements PipeTransform{
 
   transform(values:string[],search:string):string[]{
     if(!search){return values;}

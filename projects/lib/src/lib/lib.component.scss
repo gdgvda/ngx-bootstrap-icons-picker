@@ -1,4 +1,4 @@
-.icon-picker {
+.icon-picker{
   box-sizing: border-box;
   margin: 0;
   position: absolute;
@@ -12,12 +12,12 @@
   background-color: #fff;
   user-select: none;
 
-  i {
+  i{
     position: relative;
     cursor: default;
   }
 
-  .arrow {
+  .arrow{
     position: absolute;
     z-index: 999999;
     width: 0;
@@ -25,50 +25,51 @@
     border-style: solid;
   }
 
-  .arrow-right {
+  .arrow-right{
     top: 10px;
     left: -20px;
     border-width: 5px 10px;
-    border-color: rgba(0, 0, 0, 0) #777 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-color: rgba(0,0,0,0) #777 rgba(0,0,0,0) rgba(0,0,0,0);
   }
 
-  .arrow-left {
+  .arrow-left{
     top: 10px;
     left: 100%;
     border-width: 5px 10px;
-    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #777;
+    border-color: rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) #777;
   }
 
-  .arrow-bottom {
+  .arrow-bottom{
     top: -20px;
     left: 10px;
     border-width: 10px 5px;
-    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #777 rgba(0, 0, 0, 0);
+    border-color: rgba(0,0,0,0) rgba(0,0,0,0) #777 rgba(0,0,0,0);
   }
 
-  .arrow-top {
+  .arrow-top{
     left: 10px;
     border-width: 10px 5px;
-    border-color: #777 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-color: #777 rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0);
   }
 
-  div.icon-search {
+  div.icon-search{
     padding: 5px;
   }
 
-  div.icon-grid {
+  div.icon-grid{
     display: flex;
     overflow-y: auto;
     flex-direction: row;
     flex-wrap: wrap;
     padding: 5px;
 
-    div {
+    div{
       margin: 2px;
     }
+
   }
 
-  div.cursor-sv {
+  div.cursor-sv{
     position: relative;
     width: 15px;
     height: 15px;
@@ -77,7 +78,7 @@
     cursor: default;
   }
 
-  div.cursor {
+  div.cursor{
     position: relative;
     width: 16px;
     height: 16px;

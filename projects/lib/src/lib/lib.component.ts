@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef,Component,ElementRef,OnInit,ViewChild} from '@angular/core';
 import {NgxBootstrapIconsPickerService} from "./lib.service";
 
 @Component({
@@ -6,83 +6,81 @@ import {NgxBootstrapIconsPickerService} from "./lib.service";
   templateUrl: './lib.component.html',
   styleUrls: ['./lib.component.scss']
 })
-export class NgxBootstrapIconsPickerComponent implements OnInit {
+export class NgxBootstrapIconsPickerComponent implements OnInit{
 
-  @ViewChild('dialogPopup') dialogElement: any;
+  @ViewChild('dialogPopup') dialogElement:any;
 
   // Popover
-  public ipPosition: string = '';
-  public ipHeight: number = 0;
-  public ipMaxHeight: number = 0;
-  public ipWidth: number = 0;
+  public ipPosition:string = '';
+  public ipHeight:number = 0;
+  public ipMaxHeight:number = 0;
+  public ipWidth:number = 0;
   // Icon css
-  public ipIconSize: number = 0;
-  public ipIconVerticalPadding: number = 0;
-  public ipIconHorizontalPadding: number = 0;
+  public ipIconSize:number = 0;
+  public ipIconVerticalPadding:number = 0;
+  public ipIconHorizontalPadding:number = 0;
   // Item Style ie input and button
-  public ipButtonStyleClass: string = '';
-  public ipInputSearchStyleClass: string = '';
-  public ipDivSearchStyleClass: string = '';
+  public ipButtonStyleClass:string = '';
+  public ipInputSearchStyleClass:string = '';
+  public ipDivSearchStyleClass:string = '';
   // Icon and behaviors
-  public ipKeepSearchFilter: boolean = false;
-  public ipPlaceHolder: string = '';
-  public ipFallbackIcon: string = '';
+  public ipKeepSearchFilter:boolean = false;
+  public ipPlaceHolder:string = '';
+  public ipFallbackIcon:string = '';
 
-  public show: boolean = false;
-  public hidden: boolean = false;
-  public top: number = 0;
-  public left: number = 0;
-  public position: string = '';
-  public arrowTop: number = 0;
-  public selectedIcon: string = '';
-  public buttonWidth: number = 0;
-  public buttonHeight: number = 0;
+  public show:boolean = false;
+  public hidden:boolean = false;
+  public top:number = 0;
+  public left:number = 0;
+  public position:string = '';
+  public arrowTop:number = 0;
+  public selectedIcon:string = '';
+  public buttonWidth:number = 0;
+  public buttonHeight:number = 0;
 
   icons:string[] = [];
   search:string = '';
 
-  private directiveInstance: any;
-  private initialIcon: string = '';
-  private directiveElementRef: ElementRef|undefined;
+  private directiveInstance:any;
+  private initialIcon:string = '';
+  private directiveElementRef:ElementRef|undefined;
 
-  private listenerMouseDown: any;
-  private listenerResize: any;
+  private listenerMouseDown:any;
+  private listenerResize:any;
 
-  private dialogArrowSize = 10;
-
+  private dialogArrowSize:number = 10;
 
   constructor(
-    private el: ElementRef,
-    private cdr: ChangeDetectorRef,
-    private service: NgxBootstrapIconsPickerService
+    private el:ElementRef,
+    private cdr:ChangeDetectorRef,
+    private service:NgxBootstrapIconsPickerService
   ){}
 
   ngOnInit():void{
     console.log('init component');
     this.icons = this.service.getIcons();
-    this.listenerMouseDown = (event: any) => this.onMouseDown(event);
+    this.listenerMouseDown = (event:any) => this.onMouseDown(event);
     this.listenerResize = () => this.onResize();
     this.openDialog(this.initialIcon);
   }
 
-
   setDialog(
-    instance: any,
-    elementRef: ElementRef,
-    icon: string,
-    ipPosition: string,
-    ipHeight: string,
-    ipMaxHeight: string,
-    ipWidth: string,
-    ipPlaceHolder: string,
-    ipFallbackIcon: string,
-    ipIconSize: string,
-    ipIconVerticalPadding: string,
-    ipIconHorizontalPadding: string,
-    ipButtonStyleClass: string,
-    ipDivSearchStyleClass: string,
-    ipInputSearchStyleClass: string,
-    ipKeepSearchFilter: string
+    instance:any,
+    elementRef:ElementRef,
+    icon:string,
+    ipPosition:string,
+    ipHeight:string,
+    ipMaxHeight:string,
+    ipWidth:string,
+    ipPlaceHolder:string,
+    ipFallbackIcon:string,
+    ipIconSize:string,
+    ipIconVerticalPadding:string,
+    ipIconHorizontalPadding:string,
+    ipButtonStyleClass:string,
+    ipDivSearchStyleClass:string,
+    ipInputSearchStyleClass:string,
+    ipKeepSearchFilter:string
   ):void{
     this.directiveInstance = instance;
     this.setInitialIcon(icon);
@@ -91,7 +89,9 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
     this.ipHeight = parseInt(ipHeight, 10);
     this.ipMaxHeight = parseInt(ipMaxHeight, 10);
     this.ipWidth = parseInt(ipWidth, 10);
-    if (!this.ipWidth) { this.ipWidth = elementRef.nativeElement.offsetWidth; }
+    if(!this.ipWidth){
+      this.ipWidth = elementRef.nativeElement.offsetWidth;
+    }
     this.ipIconSize = parseInt(ipIconSize, 10);
     this.ipIconVerticalPadding = parseInt(ipIconVerticalPadding, 10);
     this.ipIconHorizontalPadding = parseInt(ipIconHorizontalPadding, 10);

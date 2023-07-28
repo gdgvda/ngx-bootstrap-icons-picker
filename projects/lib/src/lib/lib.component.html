@@ -1,32 +1,37 @@
 <div class="icon-picker" #dialogPopup
      [hidden]="!show"
-     [style.visibility]="this.hidden ? 'hidden' : 'visible'"
+     [style.visibility]="this.hidden?'hidden':'visible'"
      [style.height.px]="ipHeight"
      [style.width.px]="ipWidth"
      [style.top.px]="top"
      [style.left.px]="left"
-     [style.position]="position">
-
+     [style.position]="position"
+>
   <div class="arrow arrow-{{ipPosition}}" [style.top.px]="arrowTop"></div>
-
   <div class="icon-search {{ipDivSearchStyleClass}}">
-    <input type="text" class="{{ipInputSearchStyleClass}}" [text] [value]="search" (newValue)="setSearch($event)"
-           [placeholder]="ipPlaceHolder">
+    <input type="text" class="{{ipInputSearchStyleClass}}"
+           [text]
+           [value]="search"
+           [placeholder]="ipPlaceHolder"
+           (newValue)="setSearch($event)"
+    >
   </div>
-  <div class="icon-grid" [ngStyle]="{'max-height.px': ipMaxHeight}">
+  <div class="icon-grid"
+       [ngStyle]="{'max-height.px':ipMaxHeight}"
+  >
     <div *ngFor="let icon of icons | search:search">
-      <button *ngIf="icon" class="ip-button-icon {{ipButtonStyleClass}}" type="button" title="{{ icon }}"
-              [ngClass]="{active : icon === selectedIcon}"
+      <button *ngIf="icon" class="ip-button-icon {{ipButtonStyleClass}}" type="button" title="{{icon}}"
+              [ngClass]="{active:icon===selectedIcon}"
               [style.width.px]="buttonWidth"
               [style.height.px]="buttonHeight"
               [style.padding-top.px]="ipIconVerticalPadding"
               [style.padding-bottom.px]="ipIconVerticalPadding"
               [style.padding-left.px]="ipIconHorizontalPadding"
               [style.padding-right.px]="ipIconHorizontalPadding"
-              (click)="selectIcon(icon)">
+              (click)="selectIcon(icon)"
+      >
         <span class="bi bi-{{icon}}" [style.font-size.px]="ipIconSize"></span>
       </button>
     </div>
   </div>
-
 </div>

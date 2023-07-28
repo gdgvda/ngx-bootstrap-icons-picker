@@ -1,11 +1,11 @@
-import {Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, ViewContainerRef} from '@angular/core';
+import {Directive,ElementRef,EventEmitter,HostListener,Input,OnChanges,OnInit,Output,ViewContainerRef} from '@angular/core';
 import {NgxBootstrapIconsPickerComponent} from './lib.component';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[iconPicker]'
 })
-export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnChanges {
+export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit,OnChanges{
 
   @Input() iconPicker = ''
 
@@ -28,53 +28,67 @@ export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnCha
 
   @Output() iconPickerSelect = new EventEmitter<string>(true);
 
-  private dialog: any;
-  private created: boolean;
-  private ignoreChanges = false;
+  private dialog:any;
+  private created:boolean;
+  private ignoreChanges:boolean = false;
 
   constructor(
-    private vcRef: ViewContainerRef,
-    private el: ElementRef
+    private vcRef:ViewContainerRef,
+    private el:ElementRef
   ){
     this.created = false;
   }
 
   @HostListener('click')
-  onClick() {
+
+  onClick():void{
     this.openDialog();
   }
 
-  ngOnChanges(changes: any): void {
-    if (changes.iconPicker) {
+  ngOnChanges(changes:any):void{
+    if(changes.iconPicker){
       this.ignoreChanges = false;
     }
   }
 
-  ngOnInit() {
+  ngOnInit():void{
     this.iconPicker = this.iconPicker || this.bipFallbackIcon || 'fa fa-user-plus';
     this.iconPickerSelect.emit(this.iconPicker);
   }
 
-  openDialog() {
-    if (!this.created) {
+  openDialog():void{
+    if(!this.created){
       this.created = true;
       const vcRef = this.vcRef;
       const cmpRef = vcRef.createComponent(NgxBootstrapIconsPickerComponent);
-      cmpRef.instance.setDialog(this, this.el, this.iconPicker, this.bipPosition, this.bipHeight, this.bipMaxHeight,
-        this.bipWidth, this.bipPlaceholder, this.bipFallbackIcon, this.bipIconSize,
-        this.bipIconVerticalPadding, this.bipIconHorizontalPadding, this.bipButtonStyleClass, this.bipDivSearchStyleClass,
-        this.bipInputSearchStyleClass, this.bipKeepSearchFilter);
+      cmpRef.instance.setDialog(
+        this,
+        this.el,
+        this.iconPicker,
+        this.bipPosition,
+        this.bipHeight,
+        this.bipMaxHeight,
+        this.bipWidth,
+        this.bipPlaceholder,
+        this.bipFallbackIcon,
+        this.bipIconSize,
+        this.bipIconVerticalPadding,
+        this.bipIconHorizontalPadding,
+        this.bipButtonStyleClass,
+        this.bipDivSearchStyleClass,
+        this.bipInputSearchStyleClass,
+        this.bipKeepSearchFilter
+      );
       this.dialog = cmpRef.instance;
-
-      if (this.vcRef !== vcRef) {
+      if(this.vcRef!==vcRef){
         cmpRef.changeDetectorRef.detectChanges();
       }
-    } else if (this.dialog) {
+    }else if(this.dialog){
       this.dialog.openDialog(this.iconPicker);
     }
   }
 
-  iconSelected(icon: string) {
+  iconSelected(icon:string):void{
     this.iconPickerSelect.emit(icon);
   }
 
