@@ -1,6 +1,6 @@
 {
   "name": "ngx-bootstrap-icons-picker",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,11 +10,11 @@
     "watch-lib": "ng build lib --watch",
     "watch-demo": "ng serve",
     "build-lib": "ng build lib",
-    "build-demo": "ng build demo --base-href='\/ngx-bootstrap-icons-picker\/'"
+    "build-demo": "ng build demo --base-href='/ngx-bootstrap-icons-picker/'"
   },
   "private": true,
   "dependencies": {
-    "@angular-eslint/schematics": "^1.0.0",
+    "@angular-eslint/schematics": "^16.1.0",
     "@angular/animations": "^14.2.0",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
