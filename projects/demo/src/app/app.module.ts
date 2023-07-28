@@ -5,7 +5,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 
-
 @NgModule({
   declarations: [
     AppComponent
