@@ -94,7 +94,7 @@ ngx-bootstrap-icons-picker
 MIT
 MIT License
 
-Copyright (c) 2023 GDG Valle d'Aosta
+Copyright (c) 2023 Google Developers Group Valle d'Aosta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
