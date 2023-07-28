@@ -18,16 +18,6 @@ Open on browser
 
 
 
-## Publish demo to GitHub Pages
-
-Rebuild demo with:
-
-`npm run build-demo`
-
-Push new files to remote repository
-
-
-
 ## Publish to NPM
 
 Update version on:
@@ -36,10 +26,24 @@ Update version on:
 
 `/projects/lib/package.json`
 
+Update dependencies
+
+`npm update`
+
 Rebuild library
 
 `npm run build-lib`
 
 Push to package manager
 
-` npm publish dist\ngx-bootstrap-icons-picker`
+`npm publish dist\ngx-bootstrap-icons-picker`
+
+
+
+## Publish demo to GitHub Pages
+
+Rebuild demo with:
+
+`npm run build-demo`
+
+Push new files to remote repository
