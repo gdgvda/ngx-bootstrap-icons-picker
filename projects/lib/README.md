@@ -5,6 +5,7 @@
 [![demo](https://img.shields.io/badge/Demo-Live-green)](https://gdgvda.github.io/ngx-bootstrap-icons-picker/)
 [![github](https://img.shields.io/badge/Source%20Code-GitHub-blue)](https://github.com/gdgvda/ngx-bootstrap-icons-picker)
 [![npm](https://img.shields.io/badge/Package-NPM-red)](https://www.npmjs.com/package/ngx-bootstrap-icons-picker)
+[![no-ai](https://img.shields.io/badge/Coded%20by%20humans-100%25-pink)](#)
 
 This icon picker manages the free, high quality, open source [Bootstrap Icons](https://icons.getbootstrap.com/) library.
 
