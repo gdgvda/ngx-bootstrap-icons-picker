@@ -1,5 +1,5 @@
 {
-  "version": "14.0.8",
+  "version": "17.0.0",
   "name": "ngx-bootstrap-icons-picker",
   "description": "A Bootstrap Icons Picker for Angular (a simple icon selector)",
   "keywords": [
@@ -21,8 +21,8 @@
     "url": "https://github.com/gdgvda/ngx-bootstrap-icons-picker"
   },
   "peerDependencies": {
-    "@angular/common": "^14.2.0",
-    "@angular/core": "^14.2.0"
+    "@angular/common": "^17.0.0",
+    "@angular/core": "^17.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

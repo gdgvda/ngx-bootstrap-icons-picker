@@ -6,6 +6,8 @@ Contributing instructions
 
 Launch the library build with watch
 
+`npm install`
+
 `npm run watch-lib`
 
 Serve the demo project
