@@ -16,8 +16,8 @@ Angular Bootstrap Icons Picker for:
 * [twbs-bootstrap](https://github.com/twbs/bootstrap)
 * [twbs-icons](https://github.com/twbs/icons)
 
-Tested with:
-* Angular 14
+Versions compatibility:
+* Angular 14 -> `^14.0.0`
 
 _Largely inspired by [ngx-icon-picker](https://github.com/tech-advantage/ngx-icon-picker)_
 
