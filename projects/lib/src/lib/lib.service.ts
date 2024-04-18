@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {allIconsList} from "./bootstrap-icons";
+import { Injectable } from '@angular/core';
+import { allIconsList } from './bootstrap-icons';
 
 @Injectable()
 export class NgxBootstrapIconsPickerService{
@@ -12,6 +12,8 @@ export class NgxBootstrapIconsPickerService{
     }
   }
 
-  getIcons():string[]{return this.icons}
+  getIcons():string[] {
+    return this.icons
+  }
 
 }

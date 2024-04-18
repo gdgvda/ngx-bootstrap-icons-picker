@@ -6,13 +6,13 @@ import {Directive,EventEmitter,HostListener,Input,Output} from '@angular/core';
 })
 export class TextDirective{
 
-  @Output() newValue = new EventEmitter<any>();
+  @Output() newValue:EventEmitter<any> = new EventEmitter<any>();
 
   @Input() text: any;
 
-  @HostListener('input',['$event.target.value'])
+  @HostListener('input',[ '$event.target.value' ])
 
-  changeInput(value:string):void{
+  changeInput(value:string):void {
     this.newValue.emit(value);
   }
 

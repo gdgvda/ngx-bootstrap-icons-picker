@@ -1,12 +1,12 @@
-import {ChangeDetectorRef,Component,ElementRef,OnInit,ViewChild} from '@angular/core';
-import {NgxBootstrapIconsPickerService} from "./lib.service";
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgxBootstrapIconsPickerService } from './lib.service';
 
 @Component({
   selector: 'lib-ngx-bootstrap-icons-picker',
   templateUrl: './lib.component.html',
-  styleUrls: ['./lib.component.scss']
+  styleUrls: [ './lib.component.scss' ]
 })
-export class NgxBootstrapIconsPickerComponent implements OnInit{
+export class NgxBootstrapIconsPickerComponent implements OnInit {
 
   @ViewChild('dialogPopup') dialogElement:any;
 
@@ -57,7 +57,6 @@ export class NgxBootstrapIconsPickerComponent implements OnInit{
   ){}
 
   ngOnInit():void{
-    console.log('init component');
     this.icons = this.service.getIcons();
     this.listenerMouseDown = (event:any) => this.onMouseDown(event);
     this.listenerResize = () => this.onResize();
@@ -81,7 +80,7 @@ export class NgxBootstrapIconsPickerComponent implements OnInit{
     ipDivSearchStyleClass:string,
     ipInputSearchStyleClass:string,
     ipKeepSearchFilter:string
-  ):void{
+  ):void {
     this.directiveInstance = instance;
     this.setInitialIcon(icon);
     this.directiveElementRef = elementRef;
@@ -89,9 +88,7 @@ export class NgxBootstrapIconsPickerComponent implements OnInit{
     this.ipHeight = parseInt(ipHeight, 10);
     this.ipMaxHeight = parseInt(ipMaxHeight, 10);
     this.ipWidth = parseInt(ipWidth, 10);
-    if(!this.ipWidth){
-      this.ipWidth = elementRef.nativeElement.offsetWidth;
-    }
+    if( ! this.ipWidth){ this.ipWidth = elementRef.nativeElement.offsetWidth; }
     this.ipIconSize = parseInt(ipIconSize, 10);
     this.ipIconVerticalPadding = parseInt(ipIconVerticalPadding, 10);
     this.ipIconHorizontalPadding = parseInt(ipIconHorizontalPadding, 10);
@@ -105,41 +102,41 @@ export class NgxBootstrapIconsPickerComponent implements OnInit{
     this.buttonWidth = this.ipIconSize + 2 * this.ipIconHorizontalPadding;
   }
 
-  setInitialIcon(icon:string):void{
+  setInitialIcon(icon:string):void {
     this.initialIcon = icon;
-    this.selectedIcon = this.icons.find(el=>el?el===icon:false) ?? '';
-    if(this.ipKeepSearchFilter && this.selectedIcon && icon!==this.ipFallbackIcon){
+    this.selectedIcon = this.icons.find((el:string):boolean => ( el ? el === icon : false )) ?? '';
+    if(this.ipKeepSearchFilter && this.selectedIcon && icon !== this.ipFallbackIcon) {
       this.search = this.selectedIcon;
     }else{
       this.search = '';
     }
   }
 
-  openDialog(icon:string):void{
+  openDialog(icon:string):void {
     this.setInitialIcon(icon);
     this.openIconPicker();
   }
 
-  setSearch(val:string):void{
+  setSearch(val:string):void {
     this.search = val;
   }
 
-  selectIcon(icon:string):void{
+  selectIcon(icon:string):void {
     this.directiveInstance.iconSelected(icon);
     this.closeIconPicker();
   }
 
-  onMouseDown(event:any):void{
-    if(!this.isDescendant(this.el.nativeElement,event.target) && event.target!==this.directiveElementRef?.nativeElement){
+  onMouseDown(event:any):void {
+    if( ! this.isDescendant(this.el.nativeElement,event.target) && event.target !== this.directiveElementRef?.nativeElement) {
       this.closeIconPicker();
     }
   }
 
-  openIconPicker():void{
-    if(!this.show){
+  openIconPicker():void {
+    if( ! this.show){
       this.show = true;
       this.hidden = true;
-      setTimeout(() => {
+      setTimeout(():void => {
         this.setDialogPosition();
         this.hidden = false;
         this.cdr.detectChanges();
@@ -149,8 +146,8 @@ export class NgxBootstrapIconsPickerComponent implements OnInit{
     }
   }
 
-  closeIconPicker():void{
-    if(this.show){
+  closeIconPicker():void {
+    if(this.show) {
       this.show = false;
       document.removeEventListener('mousedown',this.listenerMouseDown);
       window.removeEventListener('resize',this.listenerResize);
@@ -158,67 +155,58 @@ export class NgxBootstrapIconsPickerComponent implements OnInit{
     }
   }
 
-  onResize():void{
-    if(this.position==='fixed'){
+  onResize():void {
+    if(this.position === 'fixed') {
       this.setDialogPosition();
     }
   }
 
-  setDialogPosition():void{
+  setDialogPosition():void {
     const dialogHeight = this.dialogElement.nativeElement.offsetHeight;
     let node = this.directiveElementRef?.nativeElement;
-    let position = 'static';
-    let transform = '';
+    let position:string = 'static';
+    let transform:string = '';
     let parentNode:any = null;
     let transformNode:any = null;
     let style:any = null;
-    while(node!==null && node.tagName!=='HTML'){
+    while(node !== null && node.tagName !== 'HTML') {
       style = window.getComputedStyle(node);
       position = style.getPropertyValue('position');
       transform = style.getPropertyValue('transform');
-      if(position!=='static' && parentNode===null){
-        parentNode = node;
-      }
-      if(transform && transform!=='none' && transformNode===null){
-        transformNode = node;
-      }
-      if(position==='fixed'){
-        parentNode = transformNode;
-        break;
-      }
+      if(position !== 'static' && parentNode === null){ parentNode = node; }
+      if(transform && transform !== 'none' && transformNode === null){ transformNode = node; }
+      if(position === 'fixed'){ parentNode = transformNode; break; }
       node = node.parentNode;
     }
-    const boxDirective = this.createBox(this.directiveElementRef?.nativeElement,(position!=='fixed'));
-    if(position!=='fixed' || parentNode){
-      if(parentNode===null){
+    const boxDirective = this.createBox(this.directiveElementRef?.nativeElement,( position !== 'fixed' ));
+    if(position !== 'fixed' || parentNode) {
+      if(parentNode === null) {
         parentNode = node;
       }
       const boxParent = this.createBox(parentNode,true);
       this.top = boxDirective.top - boxParent.top;
       this.left = boxDirective.left - boxParent.left;
-    }else{
+    } else {
       this.top = boxDirective.top;
       this.left = boxDirective.left;
     }
-    if(position==='fixed'){
-      this.position = 'fixed';
-    }
-    if(this.ipPosition==='left'){
+    if(position === 'fixed'){ this.position = 'fixed'; }
+    if(this.ipPosition === 'left') {
       this.left -= this.ipWidth + this.dialogArrowSize - 2;
-    }else if(this.ipPosition==='top'){
+    } else if(this.ipPosition === 'top') {
       this.top -= dialogHeight + this.dialogArrowSize;
       this.arrowTop = dialogHeight - 1;
-    }else if(this.ipPosition==='bottom'){
+    } else if(this.ipPosition === 'bottom') {
       this.top += boxDirective.height + this.dialogArrowSize;
-    }else{
+    } else {
       this.left += boxDirective.width + this.dialogArrowSize - 2;
     }
   }
 
-  isDescendant(parent:any,child:any):boolean{
+  isDescendant(parent:any,child:any):boolean {
     let node:any = child.parentNode;
-    while(node!==null){
-      if(node===parent){
+    while(node !== null) {
+      if(node === parent) {
         return true;
       }
       node = node.parentNode;
@@ -226,8 +214,8 @@ export class NgxBootstrapIconsPickerComponent implements OnInit{
     return false;
   }
 
-  createBox(element:any,offset:boolean):any{
-    return{
+  createBox(element:any,offset:boolean):any {
+    return {
       top: element.getBoundingClientRect().top + (offset ? window.pageYOffset : 0),
       left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
       width: element.offsetWidth,
