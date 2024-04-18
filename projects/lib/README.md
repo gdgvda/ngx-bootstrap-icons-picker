@@ -1,6 +1,6 @@
 # Angular Bootstrap Icons Picker
 
-> By Google Developers Group Valle d'Aosta
+> By **G**oogle **D**evelopers **G**roup [Valle d'Aosta](https://gdg.community.dev/gdg-valle-daosta/)
 
 [![demo](https://img.shields.io/badge/Demo-Live-green)](https://gdgvda.github.io/ngx-bootstrap-icons-picker/)
 [![github](https://img.shields.io/badge/Source%20Code-GitHub-blue)](https://github.com/gdgvda/ngx-bootstrap-icons-picker)
@@ -16,8 +16,11 @@ Angular Bootstrap Icons Picker for:
 * [twbs-bootstrap](https://github.com/twbs/bootstrap)
 * [twbs-icons](https://github.com/twbs/icons)
 
-Tested with:
-* Angular 14
+Versions compatibility:
+* Angular 17 -> `^17.0.0`
+* Angular 16 -> `@todo`
+* Angular 15 -> `@todo`
+* Angular 14 -> `^14.0.0`
 
 _Largely inspired by [ngx-icon-picker](https://github.com/tech-advantage/ngx-icon-picker)_
 
@@ -37,11 +40,11 @@ Or with NPM
 import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 
 @NgModule({
-  ...
-    imports:[
-  ...
+  // ...
+  imports: [
+    // ...
     NgxBootstrapIconsPickerModule
-]
+  ]
 })
 ```
 

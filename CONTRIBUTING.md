@@ -28,6 +28,12 @@ Update version on:
 
 `/projects/lib/package.json`
 
+Update readme on:
+
+`/README.md`
+
+`/projects/lib/README.md`
+
 Update dependencies
 
 `npm update`
