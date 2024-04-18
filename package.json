@@ -1,6 +1,6 @@
 {
   "name": "ngx-bootstrap-icons-picker",
-  "version": "17.0.2",
+  "version": "17.0.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
