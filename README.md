@@ -40,11 +40,11 @@ Or with NPM
 import {NgxBootstrapIconsPickerModule} from "ngx-bootstrap-icons-picker";
 
 @NgModule({
-  ...
-    imports:[
-  ...
+  // ...
+  imports: [
+  // ...
     NgxBootstrapIconsPickerModule
-]
+  ]
 })
 ```
 
