@@ -1,3 +1,8 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=bugs)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
+
 # Angular Bootstrap Icons Picker
 
 > By **G**oogle **D**evelopers **G**roup [Valle d'Aosta](https://gdg.community.dev/gdg-valle-daosta/)
