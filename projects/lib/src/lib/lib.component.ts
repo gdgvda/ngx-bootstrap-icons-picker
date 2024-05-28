@@ -216,8 +216,8 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
 
   createBox(element:any,offset:boolean):any {
     return {
-      top: element.getBoundingClientRect().top + (offset ? window.pageYOffset : 0),
-      left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
+      top: element.getBoundingClientRect().top + (offset ? window.scrollY : 0),
+      left: element.getBoundingClientRect().left + (offset ? window.scrollX : 0),
       width: element.offsetWidth,
       height: element.offsetHeight
     };
