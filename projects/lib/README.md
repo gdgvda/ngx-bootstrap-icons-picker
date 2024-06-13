@@ -1,8 +1,3 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=bugs)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
-
 # Angular Bootstrap Icons Picker
 
 > By **G**oogle **D**evelopers **G**roup [Valle d'Aosta](https://gdg.community.dev/gdg-valle-daosta/)
@@ -11,6 +6,11 @@
 [![github](https://img.shields.io/badge/Source%20Code-GitHub-blue)](https://github.com/gdgvda/ngx-bootstrap-icons-picker)
 [![npm](https://img.shields.io/badge/Package-NPM-red)](https://www.npmjs.com/package/ngx-bootstrap-icons-picker)
 [![no-ai](https://img.shields.io/badge/Coded%20by%20humans-100%25-pink)](#)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=bugs)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=gdgvda_ngx-bootstrap-icons-picker&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=gdgvda_ngx-bootstrap-icons-picker)
 
 This icon picker manages the free, high quality, open source [Bootstrap Icons](https://icons.getbootstrap.com/) library.
 
