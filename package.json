@@ -1,6 +1,6 @@
 {
   "name": "ngx-bootstrap-icons-picker",
-  "version": "22.0.0",
+  "version": "22.0.1",
   "private": true,
   "engines": {
     "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
