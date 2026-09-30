@@ -1,37 +1,40 @@
 <div class="icon-picker" #dialogPopup
+     [id]="dialogId"
+     role="dialog"
+     [attr.aria-label]="ipPlaceHolder"
      [hidden]="!show"
-     [style.visibility]="this.hidden?'hidden':'visible'"
+     [style.visibility]="hidden ? 'hidden' : 'visible'"
      [style.height.px]="ipHeight"
      [style.width.px]="ipWidth"
      [style.top.px]="top"
      [style.left.px]="left"
-     [style.position]="position"
->
-  <div class="arrow arrow-{{ipPosition}}" [style.top.px]="arrowTop"></div>
+     [style.position]="position">
+  <div class="arrow arrow-{{ipPosition}}" [style.top.px]="arrowTop" aria-hidden="true"></div>
   <div class="icon-search {{ipDivSearchStyleClass}}">
-    <input type="text" class="{{ipInputSearchStyleClass}}"
-           [text]
+    <input #searchInput type="search" class="{{ipInputSearchStyleClass}}"
+           [id]="dialogId + '-search'"
+           [attr.aria-label]="ipPlaceHolder"
            [value]="search"
            [placeholder]="ipPlaceHolder"
-           (newValue)="setSearch($event)"
-    >
+           (input)="setSearch(searchInput.value)" />
   </div>
-  <div class="icon-grid"
-       [ngStyle]="{'max-height.px':ipMaxHeight}"
-  >
-    <div *ngFor="let icon of icons | search:search">
-      <button *ngIf="icon" class="ip-button-icon {{ipButtonStyleClass}}" type="button" title="{{icon}}"
-              [ngClass]="{active:icon===selectedIcon}"
-              [style.width.px]="buttonWidth"
-              [style.height.px]="buttonHeight"
-              [style.padding-top.px]="ipIconVerticalPadding"
-              [style.padding-bottom.px]="ipIconVerticalPadding"
-              [style.padding-left.px]="ipIconHorizontalPadding"
-              [style.padding-right.px]="ipIconHorizontalPadding"
-              (click)="selectIcon(icon)"
-      >
-        <span class="bi bi-{{icon}}" [style.font-size.px]="ipIconSize"></span>
-      </button>
-    </div>
+  <div class="icon-grid" [style.max-height.px]="ipMaxHeight">
+    @for (icon of icons | search:search; track icon) {
+      <div>
+        <button class="ip-button-icon {{ipButtonStyleClass}}" type="button" [title]="icon"
+                [attr.aria-label]="icon"
+                [attr.aria-pressed]="icon === selectedIcon"
+                [class.active]="icon === selectedIcon"
+                [style.width.px]="buttonWidth"
+                [style.height.px]="buttonHeight"
+                [style.padding-top.px]="ipIconVerticalPadding"
+                [style.padding-bottom.px]="ipIconVerticalPadding"
+                [style.padding-left.px]="ipIconHorizontalPadding"
+                [style.padding-right.px]="ipIconHorizontalPadding"
+                (click)="selectIcon(icon)">
+          <span class="bi bi-{{icon}}" [style.font-size.px]="ipIconSize" aria-hidden="true"></span>
+        </button>
+      </div>
+    }
   </div>
 </div>

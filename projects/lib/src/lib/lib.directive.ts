@@ -1,104 +1,111 @@
 import {
-  ComponentRef,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewContainerRef
+  booleanAttribute, ComponentRef, DestroyRef, Directive, ElementRef, EventEmitter, inject,
+  Input, OnChanges, OnInit, Output, signal, ViewContainerRef,
 } from '@angular/core';
 import { NgxBootstrapIconsPickerComponent } from './lib.component';
 
+let nextDialogId = 0;
+
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[iconPicker]',
-  standalone: false
+  host: {
+    '(click)': 'openDialog()',
+    '(keydown)': 'onKeydown($event)',
+    '[attr.aria-haspopup]': '"dialog"',
+    '[attr.aria-expanded]': 'expanded()',
+    '[attr.aria-controls]': 'dialogId()',
+  },
 })
-export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit,OnChanges {
+export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit, OnChanges {
+  @Input() iconPicker = '';
+  @Input() bipWidth = '270px';
+  @Input() bipHeight = 'auto';
+  @Input() bipMaxHeight = '180px';
+  @Input() bipIconSize = '18px';
+  @Input() bipIconVerticalPadding = '9px';
+  @Input() bipIconHorizontalPadding = '9px';
+  @Input({ transform: booleanAttribute }) bipKeepSearchFilter = false;
+  @Input() bipPosition = 'bottom';
+  @Input() bipFallbackIcon = 'github';
+  @Input() bipPlaceholder = 'Search icon..';
+  @Input() bipButtonStyleClass = 'btn btn-default';
+  @Input() bipDivSearchStyleClass = '';
+  @Input() bipInputSearchStyleClass = 'form-control input-sm';
+  @Output() readonly iconPickerSelect = new EventEmitter<string>(true);
 
-  @Input() iconPicker:string = ''
+  protected readonly expanded = signal(false);
+  protected readonly dialogId = signal<string | null>(null);
+  private readonly vcRef = inject(ViewContainerRef);
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private dialog?: ComponentRef<NgxBootstrapIconsPickerComponent>;
 
-  @Input() bipWidth:string = '270px';
-  @Input() bipHeight:string = 'auto';
-  @Input() bipMaxHeight:string = '180px';
-
-  @Input() bipIconSize:string = '18px';
-  @Input() bipIconVerticalPadding:string = '9px';
-  @Input() bipIconHorizontalPadding:string = '9px';
-  @Input() bipKeepSearchFilter:string = 'false';
-
-  @Input() bipPosition:string = 'bottom';
-  @Input() bipFallbackIcon:string = 'github';
-  @Input() bipPlaceholder:string = 'Search icon..';
-
-  @Input() bipButtonStyleClass:string = 'btn btn-default';
-  @Input() bipDivSearchStyleClass:string = '';
-  @Input() bipInputSearchStyleClass:string = 'form-control input-sm';
-
-  @Output() iconPickerSelect:EventEmitter<string> = new EventEmitter<string>(true);
-
-  private dialog:any;
-  private created:boolean;
-  private ignoreChanges:boolean = false;
-
-  constructor(
-    private vcRef:ViewContainerRef,
-    private el:ElementRef
-  ) {
-    this.created = false;
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.dialog?.destroy();
+      this.dialog = undefined;
+    });
   }
 
-  @HostListener('click')
-  onClick():void {
-    this.openDialog();
-  }
-
-  ngOnChanges(changes:any):void {
-    if(changes.iconPicker) {
-      this.ignoreChanges = false;
-    }
-  }
-
-  ngOnInit():void {
-    this.iconPicker = this.iconPicker || this.bipFallbackIcon || 'fa fa-user-plus';
+  ngOnInit(): void {
+    this.iconPicker = this.iconPicker || this.bipFallbackIcon || 'github';
     this.iconPickerSelect.emit(this.iconPicker);
   }
 
-  openDialog():void {
-    if( ! this.created) {
-      this.created = true;
-      const vcRef:ViewContainerRef = this.vcRef;
-      const cmpRef:ComponentRef<NgxBootstrapIconsPickerComponent> = vcRef.createComponent(NgxBootstrapIconsPickerComponent);
-      cmpRef.instance.setDialog(
-        this,
-        this.el,
-        this.iconPicker,
-        this.bipPosition,
-        this.bipHeight,
-        this.bipMaxHeight,
-        this.bipWidth,
-        this.bipPlaceholder,
-        this.bipFallbackIcon,
-        this.bipIconSize,
-        this.bipIconVerticalPadding,
-        this.bipIconHorizontalPadding,
-        this.bipButtonStyleClass,
-        this.bipDivSearchStyleClass,
-        this.bipInputSearchStyleClass,
-        this.bipKeepSearchFilter
-      );
-      this.dialog = cmpRef.instance;
-      if(this.vcRef !== vcRef){ cmpRef.changeDetectorRef.detectChanges(); }
-    } else if(this.dialog) {
-      this.dialog.openDialog(this.iconPicker);
+  ngOnChanges(): void {
+    this.configureDialog();
+  }
+
+  onClick(): void {
+    this.openDialog();
+  }
+
+  onKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape' && this.expanded()) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.dialog?.instance.closeIconPicker(true);
+    } else if (event.key === 'Enter' || event.key === 'ArrowDown'
+      || (event.key === ' ' && !['INPUT', 'TEXTAREA'].includes(this.el.nativeElement.tagName))) {
+      event.preventDefault();
+      this.openDialog();
     }
   }
 
-  iconSelected(icon:string):void {
+  openDialog(): void {
+    if (this.destroyRef.destroyed || this.el.nativeElement.matches(':disabled, [aria-disabled="true"]')) return;
+    if (!this.dialog) {
+      this.dialog = this.vcRef.createComponent(NgxBootstrapIconsPickerComponent);
+      const id = 'bootstrap-icon-picker-' + nextDialogId++;
+      this.dialog.instance.dialogId = id;
+      this.dialogId.set(id);
+      this.dialog.instance.closed.subscribe(() => this.expanded.set(false));
+    }
+    this.configureDialog();
+    this.dialog.instance.openDialog(this.iconPicker);
+    this.expanded.set(this.dialog.instance.show);
+  }
+
+  iconSelected(icon: string): void {
+    this.iconPicker = icon;
     this.iconPickerSelect.emit(icon);
   }
 
+  private configureDialog(): void {
+    this.dialog?.instance.configure(this, this.el, this.iconPicker, {
+      position: this.bipPosition,
+      height: this.bipHeight,
+      maxHeight: this.bipMaxHeight,
+      width: this.bipWidth,
+      placeholder: this.bipPlaceholder,
+      fallbackIcon: this.bipFallbackIcon,
+      iconSize: this.bipIconSize,
+      iconVerticalPadding: this.bipIconVerticalPadding,
+      iconHorizontalPadding: this.bipIconHorizontalPadding,
+      buttonStyleClass: this.bipButtonStyleClass,
+      divSearchStyleClass: this.bipDivSearchStyleClass,
+      inputSearchStyleClass: this.bipInputSearchStyleClass,
+      keepSearchFilter: this.bipKeepSearchFilter,
+    });
+  }
 }

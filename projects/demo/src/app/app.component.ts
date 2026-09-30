@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { NgxBootstrapIconsPickerIconPickerDirective } from 'ngx-bootstrap-icons-picker';
 
 @Component({
   selector: 'app-root',
-  standalone: false,
+  imports: [NgxBootstrapIconsPickerIconPickerDirective],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
 
-  selectedIcon:string = ''
+  readonly selectedIcon = signal('terminal-fill');
 
   onIconPickerSelect(icon:string):void {
-    console.log(icon);
-    this.selectedIcon = icon;
+    this.selectedIcon.set(icon);
   }
 
 }

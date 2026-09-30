@@ -1,227 +1,294 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import {
+  AfterRenderRef, afterNextRender, booleanAttribute, ChangeDetectorRef, Component, DestroyRef,
+  ElementRef, inject, Injector, OnInit, output, ViewChild,
+} from '@angular/core';
 import { NgxBootstrapIconsPickerService } from './lib.service';
+import { SearchPipe } from './search.pipe';
+
+export interface IconPickerOptions {
+  position: string;
+  height: string;
+  maxHeight: string;
+  width: string;
+  placeholder: string;
+  fallbackIcon: string;
+  iconSize: string;
+  iconVerticalPadding: string;
+  iconHorizontalPadding: string;
+  buttonStyleClass: string;
+  divSearchStyleClass: string;
+  inputSearchStyleClass: string;
+  keepSearchFilter: boolean;
+}
+
+interface PickerTrigger {
+  iconSelected(icon: string): void;
+}
+
+interface ElementBox {
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+}
 
 @Component({
   selector: 'lib-ngx-bootstrap-icons-picker',
-  standalone: false,
+  imports: [SearchPipe],
   templateUrl: './lib.component.html',
-  styleUrls: [ './lib.component.scss' ]
+  styleUrl: './lib.component.scss',
+  host: { '(keydown.escape)': 'onEscape($event)' },
 })
 export class NgxBootstrapIconsPickerComponent implements OnInit {
+  @ViewChild('dialogPopup') dialogElement?: ElementRef<HTMLDivElement>;
+  @ViewChild('searchInput') private searchInput?: ElementRef<HTMLInputElement>;
 
-  @ViewChild('dialogPopup') dialogElement:any;
+  readonly closed = output<void>();
+  dialogId = '';
+  ipPosition = 'bottom';
+  ipHeight: number | null = null;
+  ipMaxHeight = 180;
+  ipWidth = 270;
+  ipIconSize = 18;
+  ipIconVerticalPadding = 9;
+  ipIconHorizontalPadding = 9;
+  ipButtonStyleClass = 'btn btn-default';
+  ipInputSearchStyleClass = 'form-control input-sm';
+  ipDivSearchStyleClass = '';
+  ipKeepSearchFilter = false;
+  ipPlaceHolder = 'Search icon..';
+  ipFallbackIcon = 'github';
 
-  // Popover
-  public ipPosition:string = '';
-  public ipHeight:number = 0;
-  public ipMaxHeight:number = 0;
-  public ipWidth:number = 0;
-  // Icon css
-  public ipIconSize:number = 0;
-  public ipIconVerticalPadding:number = 0;
-  public ipIconHorizontalPadding:number = 0;
-  // Item Style ie input and button
-  public ipButtonStyleClass:string = '';
-  public ipInputSearchStyleClass:string = '';
-  public ipDivSearchStyleClass:string = '';
-  // Icon and behaviors
-  public ipKeepSearchFilter:boolean = false;
-  public ipPlaceHolder:string = '';
-  public ipFallbackIcon:string = '';
+  show = false;
+  hidden = false;
+  top = 0;
+  left = 0;
+  position = 'absolute';
+  arrowTop: number | null = null;
+  selectedIcon = '';
+  buttonWidth = 36;
+  buttonHeight = 36;
+  readonly icons = inject(NgxBootstrapIconsPickerService).getIcons();
+  search = '';
 
-  public show:boolean = false;
-  public hidden:boolean = false;
-  public top:number = 0;
-  public left:number = 0;
-  public position:string = '';
-  public arrowTop:number = 0;
-  public selectedIcon:string = '';
-  public buttonWidth:number = 0;
-  public buttonHeight:number = 0;
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly injector = inject(Injector);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
+  private readonly window = this.document.defaultView;
+  private readonly dialogArrowSize = 10;
+  private directiveInstance?: PickerTrigger;
+  private directiveElementRef?: ElementRef<HTMLElement>;
+  private initialIcon = '';
+  private pendingRender?: AfterRenderRef;
+  private focusPending = false;
 
-  icons:string[] = [];
-  search:string = '';
+  private readonly listenerMouseDown = (event: MouseEvent): void => this.onMouseDown(event);
+  private readonly listenerResize = (): void => this.onResize();
+  private readonly listenerFocus = (event: FocusEvent): void => {
+    if (!this.containsTarget(event.target)) this.closeIconPicker();
+  };
 
-  private directiveInstance:any;
-  private initialIcon:string = '';
-  private directiveElementRef:ElementRef|undefined;
-
-  private listenerMouseDown:any;
-  private listenerResize:any;
-
-  private dialogArrowSize:number = 10;
-
-  constructor(
-    private el:ElementRef,
-    private cdr:ChangeDetectorRef,
-    private service:NgxBootstrapIconsPickerService
-  ){}
-
-  ngOnInit():void{
-    this.icons = this.service.getIcons();
-    this.listenerMouseDown = (event:any) => this.onMouseDown(event);
-    this.listenerResize = () => this.onResize();
-    this.openDialog(this.initialIcon);
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.pendingRender?.destroy();
+      this.removeListeners();
+    });
   }
 
-  setDialog(
-    instance:any,
-    elementRef:ElementRef,
-    icon:string,
-    ipPosition:string,
-    ipHeight:string,
-    ipMaxHeight:string,
-    ipWidth:string,
-    ipPlaceHolder:string,
-    ipFallbackIcon:string,
-    ipIconSize:string,
-    ipIconVerticalPadding:string,
-    ipIconHorizontalPadding:string,
-    ipButtonStyleClass:string,
-    ipDivSearchStyleClass:string,
-    ipInputSearchStyleClass:string,
-    ipKeepSearchFilter:string
-  ):void {
+  ngOnInit(): void {
+    if (this.directiveElementRef && !this.show) this.openDialog(this.initialIcon);
+  }
+
+  configure(instance: PickerTrigger, elementRef: ElementRef<HTMLElement>, icon: string, options: IconPickerOptions): void {
+    const resetSelection = !this.directiveElementRef || icon !== this.initialIcon
+      || options.keepSearchFilter !== this.ipKeepSearchFilter;
     this.directiveInstance = instance;
-    this.setInitialIcon(icon);
     this.directiveElementRef = elementRef;
-    this.ipPosition = ipPosition;
-    this.ipHeight = parseInt(ipHeight, 10);
-    this.ipMaxHeight = parseInt(ipMaxHeight, 10);
-    this.ipWidth = parseInt(ipWidth, 10);
-    if( ! this.ipWidth){ this.ipWidth = elementRef.nativeElement.offsetWidth; }
-    this.ipIconSize = parseInt(ipIconSize, 10);
-    this.ipIconVerticalPadding = parseInt(ipIconVerticalPadding, 10);
-    this.ipIconHorizontalPadding = parseInt(ipIconHorizontalPadding, 10);
-    this.ipKeepSearchFilter = JSON.parse(ipKeepSearchFilter);
-    this.ipPlaceHolder = ipPlaceHolder;
-    this.ipFallbackIcon = ipFallbackIcon;
-    this.ipButtonStyleClass = ipButtonStyleClass;
-    this.ipInputSearchStyleClass = ipInputSearchStyleClass;
-    this.ipDivSearchStyleClass = ipDivSearchStyleClass;
+    this.ipPosition = ['top', 'bottom', 'left', 'right'].includes(options.position) ? options.position : 'bottom';
+    this.ipHeight = this.pixels(options.height, null);
+    this.ipMaxHeight = this.pixels(options.maxHeight, 180);
+    this.ipWidth = this.pixels(options.width, elementRef.nativeElement.offsetWidth);
+    this.ipIconSize = this.pixels(options.iconSize, 18);
+    this.ipIconVerticalPadding = this.pixels(options.iconVerticalPadding, 9);
+    this.ipIconHorizontalPadding = this.pixels(options.iconHorizontalPadding, 9);
+    this.ipKeepSearchFilter = options.keepSearchFilter;
+    this.ipPlaceHolder = options.placeholder;
+    this.ipFallbackIcon = options.fallbackIcon;
+    this.ipButtonStyleClass = options.buttonStyleClass;
+    this.ipDivSearchStyleClass = options.divSearchStyleClass;
+    this.ipInputSearchStyleClass = options.inputSearchStyleClass;
     this.buttonHeight = this.ipIconSize + 2 * this.ipIconVerticalPadding;
     this.buttonWidth = this.ipIconSize + 2 * this.ipIconHorizontalPadding;
+    if (resetSelection) this.setInitialIcon(icon);
+    this.cdr.markForCheck();
+    if (this.show) this.schedulePosition();
   }
 
-  setInitialIcon(icon:string):void {
+  /** @deprecated Use configure() with an IconPickerOptions object. */
+  setDialog(
+    instance: PickerTrigger, elementRef: ElementRef<HTMLElement>, icon: string,
+    ipPosition: string, ipHeight: string, ipMaxHeight: string, ipWidth: string,
+    ipPlaceHolder: string, ipFallbackIcon: string, ipIconSize: string,
+    ipIconVerticalPadding: string, ipIconHorizontalPadding: string,
+    ipButtonStyleClass: string, ipDivSearchStyleClass: string,
+    ipInputSearchStyleClass: string, ipKeepSearchFilter: string | boolean,
+  ): void {
+    this.configure(instance, elementRef, icon, {
+      position: ipPosition, height: ipHeight, maxHeight: ipMaxHeight, width: ipWidth,
+      placeholder: ipPlaceHolder, fallbackIcon: ipFallbackIcon, iconSize: ipIconSize,
+      iconVerticalPadding: ipIconVerticalPadding, iconHorizontalPadding: ipIconHorizontalPadding,
+      buttonStyleClass: ipButtonStyleClass, divSearchStyleClass: ipDivSearchStyleClass,
+      inputSearchStyleClass: ipInputSearchStyleClass, keepSearchFilter: booleanAttribute(ipKeepSearchFilter),
+    });
+  }
+
+  setInitialIcon(icon: string): void {
     this.initialIcon = icon;
-    this.selectedIcon = this.icons.find((el:string):boolean => ( el ? el === icon : false )) ?? '';
-    if(this.ipKeepSearchFilter && this.selectedIcon && icon !== this.ipFallbackIcon) {
-      this.search = this.selectedIcon;
-    }else{
-      this.search = '';
-    }
+    this.selectedIcon = this.icons.includes(icon) ? icon : '';
+    this.search = this.ipKeepSearchFilter && this.selectedIcon !== this.ipFallbackIcon ? this.selectedIcon : '';
+    this.cdr.markForCheck();
   }
 
-  openDialog(icon:string):void {
+  openDialog(icon: string): void {
     this.setInitialIcon(icon);
     this.openIconPicker();
   }
 
-  setSearch(val:string):void {
-    this.search = val;
+  setSearch(value: string): void {
+    this.search = value;
+    this.cdr.markForCheck();
+    if (this.show) this.schedulePosition();
   }
 
-  selectIcon(icon:string):void {
-    this.directiveInstance.iconSelected(icon);
-    this.closeIconPicker();
+  selectIcon(icon: string): void {
+    this.selectedIcon = icon;
+    this.directiveInstance?.iconSelected(icon);
+    this.closeIconPicker(true);
   }
 
-  onMouseDown(event:any):void {
-    if( ! this.isDescendant(this.el.nativeElement,event.target) && event.target !== this.directiveElementRef?.nativeElement) {
-      this.closeIconPicker();
-    }
+  onMouseDown(event: MouseEvent): void {
+    if (!this.containsTarget(event.target)) this.closeIconPicker();
   }
 
-  openIconPicker():void {
-    if( ! this.show){
-      this.show = true;
-      this.hidden = true;
-      setTimeout(():void => {
-        this.setDialogPosition();
-        this.hidden = false;
-        this.cdr.detectChanges();
-      },0);
-      document.addEventListener('mousedown',this.listenerMouseDown);
-      window.addEventListener('resize',this.listenerResize);
-    }
+  onEscape(event: Event): void {
+    if (!this.show) return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.closeIconPicker(true);
   }
 
-  closeIconPicker():void {
-    if(this.show) {
-      this.show = false;
-      document.removeEventListener('mousedown',this.listenerMouseDown);
-      window.removeEventListener('resize',this.listenerResize);
-      this.cdr.detectChanges();
-    }
+  openIconPicker(): void {
+    if (this.show || !this.window || !this.directiveElementRef || this.destroyRef.destroyed) return;
+    this.show = true;
+    this.hidden = true;
+    this.document.addEventListener('mousedown', this.listenerMouseDown);
+    this.document.addEventListener('focusin', this.listenerFocus);
+    this.window.addEventListener('resize', this.listenerResize);
+    this.window.addEventListener('scroll', this.listenerResize, true);
+    this.schedulePosition(true);
   }
 
-  onResize():void {
-    if(this.position === 'fixed') {
-      this.setDialogPosition();
-    }
+  closeIconPicker(restoreFocus = false): void {
+    if (!this.show) return;
+    this.pendingRender?.destroy();
+    this.pendingRender = undefined;
+    this.focusPending = false;
+    this.removeListeners();
+    this.show = false;
+    this.hidden = false;
+    this.cdr.markForCheck();
+    this.closed.emit();
+    if (restoreFocus) this.directiveElementRef?.nativeElement.focus({ preventScroll: true });
   }
 
-  setDialogPosition():void {
-    const dialogHeight = this.dialogElement.nativeElement.offsetHeight;
-    let node = this.directiveElementRef?.nativeElement;
-    let position:string = 'static';
-    let transform:string = '';
-    let parentNode:any = null;
-    let transformNode:any = null;
-    let style:any = null;
-    while(node !== null && node.tagName !== 'HTML') {
-      style = window.getComputedStyle(node);
-      position = style.getPropertyValue('position');
-      transform = style.getPropertyValue('transform');
-      if(position !== 'static' && parentNode === null){ parentNode = node; }
-      if(transform && transform !== 'none' && transformNode === null){ transformNode = node; }
-      if(position === 'fixed'){ parentNode = transformNode; break; }
-      node = node.parentNode;
-    }
-    const boxDirective = this.createBox(this.directiveElementRef?.nativeElement,( position !== 'fixed' ));
-    if(position !== 'fixed' || parentNode) {
-      if(parentNode === null) {
-        parentNode = node;
-      }
-      const boxParent = this.createBox(parentNode,true);
-      this.top = boxDirective.top - boxParent.top;
-      this.left = boxDirective.left - boxParent.left;
-    } else {
-      this.top = boxDirective.top;
-      this.left = boxDirective.left;
-    }
-    if(position === 'fixed'){ this.position = 'fixed'; }
-    if(this.ipPosition === 'left') {
-      this.left -= this.ipWidth + this.dialogArrowSize - 2;
-    } else if(this.ipPosition === 'top') {
-      this.top -= dialogHeight + this.dialogArrowSize;
-      this.arrowTop = dialogHeight - 1;
-    } else if(this.ipPosition === 'bottom') {
-      this.top += boxDirective.height + this.dialogArrowSize;
-    } else {
-      this.left += boxDirective.width + this.dialogArrowSize - 2;
-    }
+  onResize(): void {
+    if (this.show) this.schedulePosition();
   }
 
-  isDescendant(parent:any,child:any):boolean {
-    let node:any = child.parentNode;
-    while(node !== null) {
-      if(node === parent) {
-        return true;
-      }
-      node = node.parentNode;
+  setDialogPosition(): void {
+    const popup = this.dialogElement?.nativeElement;
+    const trigger = this.directiveElementRef?.nativeElement;
+    if (!popup || !trigger || !this.window) return;
+    const box = trigger.getBoundingClientRect();
+    const parent = popup.offsetParent as HTMLElement | null;
+    let originTop = -this.window.scrollY;
+    let originLeft = -this.window.scrollX;
+    if (parent && (parent !== this.document.body || this.window.getComputedStyle(parent).position !== 'static')) {
+      const parentBox = parent.getBoundingClientRect();
+      originTop = parentBox.top + parent.clientTop - parent.scrollTop;
+      originLeft = parentBox.left + parent.clientLeft - parent.scrollLeft;
     }
-    return false;
+    this.position = 'absolute';
+    this.top = box.top - originTop;
+    this.left = box.left - originLeft;
+    this.arrowTop = null;
+    switch (this.ipPosition) {
+      case 'left':
+        this.left -= popup.offsetWidth + this.dialogArrowSize - 2;
+        break;
+      case 'top':
+        this.top -= popup.offsetHeight + this.dialogArrowSize;
+        this.arrowTop = popup.offsetHeight - 1;
+        break;
+      case 'right':
+        this.left += box.width + this.dialogArrowSize - 2;
+        break;
+      default:
+        this.top += box.height + this.dialogArrowSize;
+    }
+    this.cdr.markForCheck();
   }
 
-  createBox(element:any,offset:boolean):any {
+  isDescendant(parent: Node, child: Node): boolean {
+    return parent.contains(child);
+  }
+
+  createBox(element: HTMLElement, offset: boolean): ElementBox {
+    const box = element.getBoundingClientRect();
     return {
-      top: element.getBoundingClientRect().top + (offset ? window.scrollY : 0),
-      left: element.getBoundingClientRect().left + (offset ? window.scrollX : 0),
+      top: box.top + (offset ? this.window?.scrollY ?? 0 : 0),
+      left: box.left + (offset ? this.window?.scrollX ?? 0 : 0),
       width: element.offsetWidth,
-      height: element.offsetHeight
+      height: element.offsetHeight,
     };
   }
 
+  private containsTarget(target: EventTarget | null): boolean {
+    if (!target || !('nodeType' in target)) return false;
+    return this.el.nativeElement.contains(target as Node)
+      || !!this.directiveElementRef?.nativeElement.contains(target as Node);
+  }
+
+  private schedulePosition(focusSearch = false): void {
+    this.focusPending ||= focusSearch;
+    this.pendingRender?.destroy();
+    // [hidden] and size bindings must reach the DOM before measuring it.
+    this.pendingRender = afterNextRender(() => {
+      this.pendingRender = undefined;
+      if (!this.show || this.destroyRef.destroyed) return;
+      this.setDialogPosition();
+      this.hidden = false;
+      this.cdr.detectChanges();
+      if (this.focusPending) {
+        this.focusPending = false;
+        this.searchInput?.nativeElement.focus({ preventScroll: true });
+      }
+    }, { injector: this.injector });
+    this.cdr.markForCheck();
+  }
+
+  private removeListeners(): void {
+    this.document.removeEventListener('mousedown', this.listenerMouseDown);
+    this.document.removeEventListener('focusin', this.listenerFocus);
+    this.window?.removeEventListener('resize', this.listenerResize);
+    this.window?.removeEventListener('scroll', this.listenerResize, true);
+  }
+
+  private pixels<T extends number | null>(value: string, fallback: T): number | T {
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
+  }
 }

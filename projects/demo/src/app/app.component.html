@@ -35,20 +35,21 @@
   <h2>Example</h2>
   <p>Basic example</p>
   <div class="input-group mb-3">
-    <span class="input-group-text"><i class="bi bi-{{selectedIcon}}"></i></span>
-    <input type="text" class="form-control"
-           [iconPicker]="'terminal-fill'"
-           [value]="selectedIcon"
+    <span class="input-group-text"><i class="bi bi-{{selectedIcon()}}" aria-hidden="true"></i></span>
+    <input id="selected-icon" aria-label="Selected icon" type="text" class="form-control" readonly
+           [iconPicker]="selectedIcon()"
+           [value]="selectedIcon()"
            (iconPickerSelect)="onIconPickerSelect($event)"
     />
   </div>
   <h3>Installing and usage</h3>
-  <h4>With Angular CLI</h4>
-  <pre><code>ng add ngx-bootstrap-icons-picker</code></pre>
-  <h4>Or with NPM</h4>
-  <pre><code>npm install ngx-bootstrap-icons-picker --save`</code></pre>
+  <h4>With NPM</h4>
+  <pre ngNonBindable><code>npm install ngx-bootstrap-icons-picker bootstrap bootstrap-icons</code></pre>
+  <p>Load Bootstrap and Bootstrap Icons CSS in your application's global styles.</p>
+  <pre ngNonBindable><code>&#64;import 'bootstrap/dist/css/bootstrap.min.css';
+&#64;import 'bootstrap-icons/font/bootstrap-icons.css';</code></pre>
   <h3>Load the module for your app</h3>
-  <pre><code>import &#123;NgxBootstrapIconsPickerModule&#125; from "ngx-bootstrap-icons-picker";
+  <pre ngNonBindable><code>import &#123;NgxBootstrapIconsPickerModule&#125; from "ngx-bootstrap-icons-picker";
 
 &#64;NgModule(&#123;
   ...
@@ -58,17 +59,17 @@
   ]
 &#125;)</code></pre>
   <h3>Use it in your HTML template</h3>
-  <pre><code>&lt;div class="input-group mb-3"&gt;
+  <pre ngNonBindable><code>&lt;div class="input-group mb-3"&gt;
   &lt;span class="input-group-text"&gt;&lt;i class="bi bi-&#123;&#123;selectedIcon&#125;&#125;"&gt;&lt;/i&gt;&lt;/span&gt;
   &lt;input type="text" class="form-control"
-    [iconPicker]="'terminal-fill'"
+    [iconPicker]="selectedIcon"
     [value]="selectedIcon"
     (iconPickerSelect)="onIconPickerSelect($event)"
   /&gt;
 &lt;/div&gt;</code></pre>
   <h4>Component property and methods</h4>
-  <pre><code>export class AppComponent &#123;
-  selectedIcon:string = ''
+  <pre ngNonBindable><code>export class AppComponent &#123;
+  selectedIcon:string = 'terminal-fill';
 
   onIconPickerSelect(icon:string):void&#123;
     this.selectedIcon = icon;
