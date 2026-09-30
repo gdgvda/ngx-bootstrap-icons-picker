@@ -11,10 +11,13 @@ export class TextDirective{
 
   @Input() text: any;
 
-  @HostListener('input',[ '$event.target.value' ])
+  @HostListener('input',['$event'])
 
-  changeInput(value:string):void {
-    this.newValue.emit(value);
+  changeInput(event:Event):void {
+    const value = (event.target as HTMLInputElement | null)?.value;
+    if(value !== undefined) {
+      this.newValue.emit(value);
+    }
   }
 
 }
