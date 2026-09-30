@@ -9,10 +9,18 @@ it('renders the packaged standalone picker and keeps the selected value on reope
   const input = root.querySelector<HTMLInputElement>('#selected-icon')!;
   input.click();
   await fixture.whenStable();
+  const search = root.querySelector<HTMLInputElement>('.icon-search input')!;
+  search.value = 'github';
+  search.dispatchEvent(new Event('input', { bubbles: true }));
+  await fixture.whenStable();
   root.querySelector<HTMLButtonElement>('button[title="github"]')!.click();
   await fixture.whenStable();
   expect(input.value).toBe('github');
   input.click();
+  await fixture.whenStable();
+  expect(search.value).toBe('');
+  search.value = 'github';
+  search.dispatchEvent(new Event('input', { bubbles: true }));
   await fixture.whenStable();
   expect(root.querySelector<HTMLButtonElement>('.ip-button-icon.active')!.title).toBe('github');
 });

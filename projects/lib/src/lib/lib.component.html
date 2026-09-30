@@ -1,6 +1,6 @@
-<div class="icon-picker" #dialogPopup
+<dialog class="icon-picker" #dialogPopup
      [id]="dialogId"
-     role="dialog"
+     [open]="show"
      [attr.aria-label]="ipPlaceHolder"
      [hidden]="!show"
      [style.visibility]="hidden ? 'hidden' : 'visible'"
@@ -18,8 +18,10 @@
            [placeholder]="ipPlaceHolder"
            (input)="setSearch(searchInput.value)" />
   </div>
-  <div class="icon-grid" [style.max-height.px]="ipMaxHeight">
-    @for (icon of icons | search:search; track icon) {
+  @let filteredIcons = icons | search:search;
+  <div #iconGrid class="icon-grid" [style.max-height.px]="ipMaxHeight"
+       (scroll)="onGridScroll(iconGrid, filteredIcons.length)">
+    @for (icon of filteredIcons | slice:0:renderedIconCount; track icon) {
       <div>
         <button class="ip-button-icon {{ipButtonStyleClass}}" type="button" [title]="icon"
                 [attr.aria-label]="icon"
@@ -31,10 +33,11 @@
                 [style.padding-bottom.px]="ipIconVerticalPadding"
                 [style.padding-left.px]="ipIconHorizontalPadding"
                 [style.padding-right.px]="ipIconHorizontalPadding"
-                (click)="selectIcon(icon)">
+                (click)="selectIcon(icon)"
+                (focus)="onIconFocus($index, filteredIcons.length)">
           <span class="bi bi-{{icon}}" [style.font-size.px]="ipIconSize" aria-hidden="true"></span>
         </button>
       </div>
     }
   </div>
-</div>
+</dialog>

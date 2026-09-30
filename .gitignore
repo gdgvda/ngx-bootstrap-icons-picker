@@ -6,6 +6,10 @@
 /out-tsc
 /bazel-out
 
+# Test artifacts
+/.vitest
+/coverage
+
 # Node
 /node_modules
 npm-debug.log
@@ -32,7 +36,6 @@ ngx-bootstrap-icons-picker/.vscode/tasks.json
 /.angular/cache
 .sass-cache/
 /connect.lock
-/coverage
 /libpeerconnection.log
 testem.log
 /typings

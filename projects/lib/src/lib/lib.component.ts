@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, SlicePipe } from '@angular/common';
 import {
   AfterRenderRef, afterNextRender, booleanAttribute, ChangeDetectorRef, Component, DestroyRef,
   ElementRef, inject, Injector, OnInit, output, ViewChild,
@@ -22,6 +22,22 @@ export interface IconPickerOptions {
   keepSearchFilter: boolean;
 }
 
+type LegacyIconPickerOptions = [
+  position: string,
+  height: string,
+  maxHeight: string,
+  width: string,
+  placeholder: string,
+  fallbackIcon: string,
+  iconSize: string,
+  iconVerticalPadding: string,
+  iconHorizontalPadding: string,
+  buttonStyleClass: string,
+  divSearchStyleClass: string,
+  inputSearchStyleClass: string,
+  keepSearchFilter: string | boolean,
+];
+
 interface PickerTrigger {
   iconSelected(icon: string): void;
 }
@@ -35,14 +51,15 @@ interface ElementBox {
 
 @Component({
   selector: 'lib-ngx-bootstrap-icons-picker',
-  imports: [SearchPipe],
+  imports: [SearchPipe, SlicePipe],
   templateUrl: './lib.component.html',
   styleUrl: './lib.component.scss',
   host: { '(keydown.escape)': 'onEscape($event)' },
 })
 export class NgxBootstrapIconsPickerComponent implements OnInit {
-  @ViewChild('dialogPopup') dialogElement?: ElementRef<HTMLDivElement>;
-  @ViewChild('searchInput') private searchInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('dialogPopup') dialogElement?: ElementRef<HTMLDialogElement>;
+  @ViewChild('searchInput') private readonly searchInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('iconGrid') private readonly gridElement?: ElementRef<HTMLDivElement>;
 
   readonly closed = output<void>();
   dialogId = '';
@@ -71,6 +88,7 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
   buttonHeight = 36;
   readonly icons = inject(NgxBootstrapIconsPickerService).getIcons();
   search = '';
+  renderedIconCount = 80;
 
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -86,7 +104,9 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
   private focusPending = false;
 
   private readonly listenerMouseDown = (event: MouseEvent): void => this.onMouseDown(event);
-  private readonly listenerResize = (): void => this.onResize();
+  private readonly listenerResize = (event: Event): void => {
+    if (!this.containsTarget(event.target)) this.onResize();
+  };
   private readonly listenerFocus = (event: FocusEvent): void => {
     if (!this.containsTarget(event.target)) this.closeIconPicker();
   };
@@ -122,6 +142,7 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
     this.ipInputSearchStyleClass = options.inputSearchStyleClass;
     this.buttonHeight = this.ipIconSize + 2 * this.ipIconVerticalPadding;
     this.buttonWidth = this.ipIconSize + 2 * this.ipIconHorizontalPadding;
+    this.renderedIconCount = Math.max(this.renderedIconCount, this.iconBatchSize);
     if (resetSelection) this.setInitialIcon(icon);
     this.cdr.markForCheck();
     if (this.show) this.schedulePosition();
@@ -130,12 +151,13 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
   /** @deprecated Use configure() with an IconPickerOptions object. */
   setDialog(
     instance: PickerTrigger, elementRef: ElementRef<HTMLElement>, icon: string,
-    ipPosition: string, ipHeight: string, ipMaxHeight: string, ipWidth: string,
-    ipPlaceHolder: string, ipFallbackIcon: string, ipIconSize: string,
-    ipIconVerticalPadding: string, ipIconHorizontalPadding: string,
-    ipButtonStyleClass: string, ipDivSearchStyleClass: string,
-    ipInputSearchStyleClass: string, ipKeepSearchFilter: string | boolean,
+    ...options: LegacyIconPickerOptions
   ): void {
+    const [
+      ipPosition, ipHeight, ipMaxHeight, ipWidth, ipPlaceHolder, ipFallbackIcon, ipIconSize,
+      ipIconVerticalPadding, ipIconHorizontalPadding, ipButtonStyleClass,
+      ipDivSearchStyleClass, ipInputSearchStyleClass, ipKeepSearchFilter,
+    ] = options;
     this.configure(instance, elementRef, icon, {
       position: ipPosition, height: ipHeight, maxHeight: ipMaxHeight, width: ipWidth,
       placeholder: ipPlaceHolder, fallbackIcon: ipFallbackIcon, iconSize: ipIconSize,
@@ -148,8 +170,7 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
   setInitialIcon(icon: string): void {
     this.initialIcon = icon;
     this.selectedIcon = this.icons.includes(icon) ? icon : '';
-    this.search = this.ipKeepSearchFilter && this.selectedIcon !== this.ipFallbackIcon ? this.selectedIcon : '';
-    this.cdr.markForCheck();
+    this.setSearch(this.ipKeepSearchFilter && this.selectedIcon !== this.ipFallbackIcon ? this.selectedIcon : '');
   }
 
   openDialog(icon: string): void {
@@ -158,9 +179,21 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
   }
 
   setSearch(value: string): void {
+    if (value !== this.search) {
+      this.renderedIconCount = this.iconBatchSize;
+      if (this.gridElement) this.gridElement.nativeElement.scrollTop = 0;
+    }
     this.search = value;
     this.cdr.markForCheck();
     if (this.show) this.schedulePosition();
+  }
+
+  onGridScroll(grid: HTMLElement, total: number): void {
+    if (grid.scrollTop + grid.clientHeight * 2 >= grid.scrollHeight) this.loadMoreIcons(total);
+  }
+
+  onIconFocus(index: number, total: number): void {
+    if (index + 1 >= this.renderedIconCount) this.loadMoreIcons(total);
   }
 
   selectIcon(icon: string): void {
@@ -260,6 +293,19 @@ export class NgxBootstrapIconsPickerComponent implements OnInit {
     if (!target || !('nodeType' in target)) return false;
     return this.el.nativeElement.contains(target as Node)
       || !!this.directiveElementRef?.nativeElement.contains(target as Node);
+  }
+
+  private get iconBatchSize(): number {
+    // Include two viewports for large custom grids; each button has a 2px margin.
+    const columns = Math.ceil(this.ipWidth / (this.buttonWidth + 4));
+    const rows = Math.ceil(this.ipMaxHeight / (this.buttonHeight + 4));
+    return Math.max(80, columns * rows * 2);
+  }
+
+  private loadMoreIcons(total: number): void {
+    if (this.renderedIconCount >= total) return;
+    this.renderedIconCount = Math.min(total, this.renderedIconCount + this.iconBatchSize);
+    this.cdr.markForCheck();
   }
 
   private schedulePosition(focusSearch = false): void {

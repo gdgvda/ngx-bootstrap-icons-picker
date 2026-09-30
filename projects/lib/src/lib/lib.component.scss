@@ -1,6 +1,7 @@
 .icon-picker{
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
   position: absolute;
   z-index: 100000;
   top: 250px;
@@ -9,6 +10,7 @@
   height: auto;
   border: #777 solid 1px;
   cursor: default;
+  color: inherit;
   background-color: #fff;
   user-select: none;
 

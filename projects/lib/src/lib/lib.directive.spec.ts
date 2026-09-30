@@ -99,13 +99,16 @@ describe('Icon picker interactions', () => {
     trigger.focus();
     trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await settle();
-    const popup = root.querySelector<HTMLElement>('.icon-picker');
+    const popup = root.querySelector<HTMLDialogElement>('dialog.icon-picker');
     expect(popup).not.toBeNull();
+    expect(popup!.open).toBe(true);
+    expect(popup!.getAttribute('aria-label')).toBe('Search icon..');
     expect(trigger.getAttribute('aria-expanded')).toBe('true');
     expect(document.activeElement).toBe(popup!.querySelector('input'));
     popup!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await settle();
     expect(popup!.hidden).toBe(true);
+    expect(popup!.open).toBe(false);
     expect(trigger.getAttribute('aria-expanded')).toBe('false');
     expect(document.activeElement).toBe(trigger);
   });
@@ -117,7 +120,7 @@ describe('Icon picker interactions', () => {
     search.dispatchEvent(new Event('input', { bubbles: true }));
     await settle();
     const buttons = popup.querySelectorAll<HTMLButtonElement>('button');
-    expect(buttons.length).toBe(1);
+    expect(buttons).toHaveLength(1);
     expect(buttons[0].title).toBe('github');
     buttons[0].click();
     await settle();
@@ -133,7 +136,7 @@ describe('Icon picker interactions', () => {
     fixture.componentInstance.keepSearchFilter.set('false');
     await settle();
     expect(popup.querySelector('input')!.value).toBe('');
-    expect(popup.querySelectorAll('button').length).toBe(3);
+    expect(popup.querySelectorAll('button')).toHaveLength(3);
   });
 
   it('updates the DOM when a resize moves the trigger', async () => {
