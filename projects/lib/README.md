@@ -28,9 +28,6 @@ Versions compatibility:
 * Angular 19 -> `^19.0.0`
 * Angular 18 -> `^18.0.0`
 * Angular 17 -> `^17.0.0`
-* Angular 16 -> `@todo`
-* Angular 15 -> `@todo`
-* Angular 14 -> `^14.0.0`
 
 _Largely inspired by [ngx-icon-picker](https://github.com/tech-advantage/ngx-icon-picker)_
 
