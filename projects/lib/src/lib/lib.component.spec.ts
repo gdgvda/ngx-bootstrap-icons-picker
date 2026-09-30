@@ -1,5 +1,6 @@
 import {ComponentFixture,TestBed} from '@angular/core/testing';
 import {NgxBootstrapIconsPickerComponent} from './lib.component';
+import {NgxBootstrapIconsPickerModule} from './lib.module';
 
 describe('NgxBootstrapIconsPickerComponent',() => {
   let component: NgxBootstrapIconsPickerComponent;
@@ -7,8 +8,8 @@ describe('NgxBootstrapIconsPickerComponent',() => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        NgxBootstrapIconsPickerComponent
+      imports: [
+        NgxBootstrapIconsPickerModule
       ]
     }).compileComponents();
 
