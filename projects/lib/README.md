@@ -22,6 +22,7 @@ Angular Bootstrap Icons Picker for:
 * [twbs-icons](https://github.com/twbs/icons)
 
 Versions compatibility:
+* Angular 19 -> `^19.0.0`
 * Angular 18 -> `^18.0.0`
 * Angular 17 -> `^17.0.0`
 * Angular 16 -> `@todo`

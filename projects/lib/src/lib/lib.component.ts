@@ -3,6 +3,7 @@ import { NgxBootstrapIconsPickerService } from './lib.service';
 
 @Component({
   selector: 'lib-ngx-bootstrap-icons-picker',
+  standalone: false,
   templateUrl: './lib.component.html',
   styleUrls: [ './lib.component.scss' ]
 })

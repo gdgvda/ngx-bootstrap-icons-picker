@@ -14,7 +14,8 @@ import { NgxBootstrapIconsPickerComponent } from './lib.component';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: '[iconPicker]'
+  selector: '[iconPicker]',
+  standalone: false
 })
 export class NgxBootstrapIconsPickerIconPickerDirective implements OnInit,OnChanges {
 

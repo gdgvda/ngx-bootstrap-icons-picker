@@ -2,7 +2,8 @@ import {Directive,EventEmitter,HostListener,Input,Output} from '@angular/core';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: '[text]'
+  selector: '[text]',
+  standalone: false
 })
 export class TextDirective{
 
